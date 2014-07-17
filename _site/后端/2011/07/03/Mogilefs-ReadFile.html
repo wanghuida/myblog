@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
+
+    <title>MogileFS读取文件的过程</title>
+    <meta name="description" content="">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+  </head>
+  <body>
+    <aside id="sidebar">
+      <nav id="tags">
+        <a href="/index.html" id="avatar"></a>
+
+        <ul id="tags__ul">
+          <li id="js-label1" class="tags__li tags-btn active">所有文章</li>
+          <li id="js-label2" class="tags__li tags-btn">后端</li>
+          <li id="js-label3" class="tags__li tags-btn">移动</li>
+          <li id="js-label4" class="tags__li tags-btn">前端</li>
+          <li id="js-label5" class="tags__li tags-btn">系统</li>
+          <li id="js-label6" class="tags__li tags-btn">数据存储</li>
+        </ul>
+
+        <div id="tags__bottom">
+          <a href="mailto:wanghuida258@aliyun.com" id="icon-email" class="tags-btn fontello"></a>
+          <a href="/rss.xml" id="icon-feed" class="tags-btn fontello"></a>
+        </div>
+      </nav> <!-- end #tags -->
+
+      <div id="posts-list">
+        <!--<form action="" id="search-form">
+          <a href="/index.html" id="mobile-avatar"></a>
+          NOTE: input field is disabled by default 
+          <input id="search-input" type="text" placeholder="Search..." disabled >
+        </form>-->
+
+        <nav id="pl__container">
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2014/07/16/angularjs-cart.html"><span class="pl__circle"></span><span class="pl__title">AngularJS 购物车</span><span class="pl__date">Jul 2014</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2014/07/16/angularjs-helloworld.html"><span class="pl__circle"></span><span class="pl__title">AngularJS 初探</span><span class="pl__date">Jul 2014</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2014/06/10/fpm-used-all-process.html"><span class="pl__circle"></span><span class="pl__title">fpm的所有进程都占用 出现假死</span><span class="pl__date">Jun 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/06/07/mac-android-mobile.html"><span class="pl__circle"></span><span class="pl__title">mac 下识别android手机</span><span class="pl__date">Jun 2014</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2014/05/29/generate-short-link.html"><span class="pl__circle"></span><span class="pl__title">生成短链接</span><span class="pl__date">May 2014</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2014/05/22/hive-load-nginx-log.html"><span class="pl__circle"></span><span class="pl__title">hive 读取nginx 日志</span><span class="pl__date">May 2014</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2014/04/23/fuzzy-image.html"><span class="pl__circle"></span><span class="pl__title">图像的模糊处理</span><span class="pl__date">Apr 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/02/05/ios-bezier-curves.html"><span class="pl__circle"></span><span class="pl__title">ios 用关键帧按贝塞尔曲线移动</span><span class="pl__date">Feb 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/27/ios-third-share.html"><span class="pl__circle"></span><span class="pl__title">ios 第三方库大汇总</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/27/ios-static-lib.html"><span class="pl__circle"></span><span class="pl__title">ios 静态库</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/27/calayer-example.html"><span class="pl__circle"></span><span class="pl__title">CALayer 常用例子</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/27/uitableview-3.html"><span class="pl__circle"></span><span class="pl__title">uitableview (3)</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2014/01/26/select-for-update.html"><span class="pl__circle"></span><span class="pl__title">select for update</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/26/uitableview-2.html"><span class="pl__circle"></span><span class="pl__title">UITableView (2)</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/24/uitableview-1.html"><span class="pl__circle"></span><span class="pl__title">UITableView (1)</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/22/ios-code-helloworld.html"><span class="pl__circle"></span><span class="pl__title">纯代码写ios</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2013/07/25/304huan-cun-tu-pian-mei-you-hong-fa-loadshi-jian.html"><span class="pl__circle"></span><span class="pl__title">304缓存图片没有触发load事件</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/07/18/ubuntu-keychain-shi-yong.html"><span class="pl__circle"></span><span class="pl__title">ubuntu keychain 使用</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/07/17/linux-cao-zuo-ji-jin.html"><span class="pl__circle"></span><span class="pl__title">linux 操作集锦</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/07/17/mmd-backend.html"><span class="pl__circle"></span><span class="pl__title">创业公司的运维工作</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/07/15/cutycapt-htmlye-mian-sheng-cheng-tu-pian-fen-xiang-wei-bo.html"><span class="pl__circle"></span><span class="pl__title">CutyCapt html页面生成图片 分享微博</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/07/02/phptu-pian-chu-li-ubuntupei-zhi.html"><span class="pl__circle"></span><span class="pl__title">php图片处理ubuntu配置</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2013/06/27/fu-dong-ju-zhong.html"><span class="pl__circle"></span><span class="pl__title">浮动居中</span><span class="pl__date">Jun 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/05/30/sshfs.html"><span class="pl__circle"></span><span class="pl__title">sshfs</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/05/29/cacti-spinede-an-zhuang-pei-zhi.html"><span class="pl__circle"></span><span class="pl__title">cacti spine的安装配置</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/05/29/sysdescr-unknown-object-identifier-sub-id-not-found-top-sysdescr.html"><span class="pl__circle"></span><span class="pl__title">解决 sysDescr: Unknown Object Identifier (Sub-id not found: (top)  sysDescr)</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/05/24/sqlalchemy-ding-yi-mo-xing.html"><span class="pl__circle"></span><span class="pl__title">sqlalchemy 定义模型</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/05/24/yii-yin-cang-index-dot-php.html"><span class="pl__circle"></span><span class="pl__title">yii 隐藏index.php RESTful nginx配置</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/05/24/yii-yong-hu-yan-zheng.html"><span class="pl__circle"></span><span class="pl__title">yii 用户验证</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/05/23/yii-ri-zhi.html"><span class="pl__circle"></span><span class="pl__title">yii 文件日志</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2013/05/23/jquery-validation.html"><span class="pl__circle"></span><span class="pl__title">jquery validation</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/05/02/ying-wen-ubuntuan-zhuang-zhong-wen-bao.html"><span class="pl__circle"></span><span class="pl__title">英文Ubuntu安装中文包</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/04/07/zhu-cong-qie-huan.html"><span class="pl__circle"></span><span class="pl__title">主从切换</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/04/07/ke-long-slave.html"><span class="pl__circle"></span><span class="pl__title">克隆 slave</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/04/04/5fen-zhong-li-jie-iptables.html"><span class="pl__circle"></span><span class="pl__title">5分钟理解iptables</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/04/03/ubuntu-routeming-ling.html"><span class="pl__circle"></span><span class="pl__title">ubuntu route命令</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/04/03/tcpdump-jian-ming-jiao-cheng.html"><span class="pl__circle"></span><span class="pl__title">tcpdump 简明教程</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/04/03/ibm-x3650-zhong-zhuang-xi-tong.html"><span class="pl__circle"></span><span class="pl__title">ibm x3650 重装系统</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/04/03/fu-wu-qi-zeng-jia-ci-pan.html"><span class="pl__circle"></span><span class="pl__title">ubuntu服务器增加磁盘</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/03/31/nginx-pei-zhi-mo-ban.html"><span class="pl__circle"></span><span class="pl__title">nginx 配置模板</span><span class="pl__date">Mar 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/03/27/ubuntu-xiu-fu-localecuo-wu.html"><span class="pl__circle"></span><span class="pl__title">ubuntu 修复locale错误</span><span class="pl__date">Mar 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/03/05/sqlalchemy-zi-dong-chuang-jian-biao.html"><span class="pl__circle"></span><span class="pl__title">sqlalchemy 自动创建表</span><span class="pl__date">Mar 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-an-quan.html"><span class="pl__circle"></span><span class="pl__title">Mysql 安全</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-guan-li-yu-ju.html"><span class="pl__circle"></span><span class="pl__title">Mysql 管理语句</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-zhuang-tai-jian-cha.html"><span class="pl__circle"></span><span class="pl__title">Mysql 状态检查</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-zhu-cong-she-zhi.html"><span class="pl__circle"></span><span class="pl__title">Mysql 主从设置</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-you-hua-pei-zhi.html"><span class="pl__circle"></span><span class="pl__title">Mysql 优化配置</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-ri-zhi-fen-lei.html"><span class="pl__circle"></span><span class="pl__title">Mysql 日志分类</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/02/26/ubuntu-wang-luo-she-zhi.html"><span class="pl__circle"></span><span class="pl__title">ubuntu 网络设置</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/02/26/fu-wu-qi-ji-chu-pei-zhi.html"><span class="pl__circle"></span><span class="pl__title">ubuntu 服务器基础配置</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/02/01/flask-nginx-uwsgibu-shu.html"><span class="pl__circle"></span><span class="pl__title">flask nginx uwsgi 部署</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/01/18/you-lan-qi-huan-cun-jie-xi.html"><span class="pl__circle"></span><span class="pl__title">游览器缓存解析</span><span class="pl__date">Jan 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/01/10/rtxldapjiao-cheng.html"><span class="pl__circle"></span><span class="pl__title">RTXLDAP教程</span><span class="pl__date">Jan 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/01/06/datehan-shu-de-wu-yong.html"><span class="pl__circle"></span><span class="pl__title">date函数的误用</span><span class="pl__date">Jan 2013</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2013/01/04/jqueryzai-firefoxxia-wu-fa-autocomplete.html"><span class="pl__circle"></span><span class="pl__title">jquery在firefox下无法autocomplete</span><span class="pl__date">Jan 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/12/17/system-dot-out-dot-printlnluan-ma.html"><span class="pl__circle"></span><span class="pl__title">System.out.println 乱码</span><span class="pl__date">Dec 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/25/mogilefsshe-bei-sun-pi-chu-li-liu-cheng.html"><span class="pl__circle"></span><span class="pl__title">mogilefs设备损坏处理流程</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/25/inotify.html"><span class="pl__circle"></span><span class="pl__title">inotify,rsync统一化配置</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/22/mogilefsan-zhuang-pei-zhi.html"><span class="pl__circle"></span><span class="pl__title">MogileFS安装配置</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/22/time-hiresjie-shao.html"><span class="pl__circle"></span><span class="pl__title">Time::HiRes介绍</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2012/11/22/redisshi-zhan.html"><span class="pl__circle"></span><span class="pl__title">redis实战</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/22/xiu-fu-mogilefsmu-lu-owner.html"><span class="pl__circle"></span><span class="pl__title">修复mogilefs目录owner</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/10/an-zhuang-pei-zhi-hive.html"><span class="pl__circle"></span><span class="pl__title">安装配置hive</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/08/perlfu-jin-cheng-jian-ting-zi-jin-cheng-gong-zuo-shi-li.html"><span class="pl__circle"></span><span class="pl__title">perl父进程监听，子进程工作实例</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/11/07/nginxfan-xiang-dai-li-zi-dong-urldecodewen-ti.html"><span class="pl__circle"></span><span class="pl__title">nginx反向代理自动urldecode问题</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/06/mogilefsshan-chu-dui-lie.html"><span class="pl__circle"></span><span class="pl__title">mogilefs删除队列</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/04/bian-xie-hadoopde-map-reduce.html"><span class="pl__circle"></span><span class="pl__title">编写hadoop的Map-Reduce</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/03/eclipsepei-zhi-hadoopde-map-reducekai-fa-huan-jing.html"><span class="pl__circle"></span><span class="pl__title">eclipse配置hadoop的map-reduce开发环境</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/02/an-zhuang-pei-zhi-hadoop.html"><span class="pl__circle"></span><span class="pl__title">安装配置hadoop</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/10/23/mogilefsxiang-jie.html"><span class="pl__circle"></span><span class="pl__title">MogileFS详解</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/10/16/mogilefsde-replicatefen-xi.html"><span class="pl__circle"></span><span class="pl__title">MogileFS的replicate进程分析</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/10/14/ying-pan-an-zhuang-centos.html"><span class="pl__circle"></span><span class="pl__title">硬盘安装CentOS</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/10/13/irc-irssishi-yong-jiao-cheng.html"><span class="pl__circle"></span><span class="pl__title">IRC:irssi使用教程</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/10/13/mogstoredshi-yong-nginx.html"><span class="pl__circle"></span><span class="pl__title">mogstored使用nginx</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/10/11/mogilefswen-jian-lu-jing-gui-ze.html"><span class="pl__circle"></span><span class="pl__title">mogilefs文件路径规则</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/10/09/mogilefsshe-bei-quan-zhong-suan-fa.html"><span class="pl__circle"></span><span class="pl__title">mogilefs设备权重算法</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/29/mogilefsde-fscktan-jiu.html"><span class="pl__circle"></span><span class="pl__title">mogilefs fsck探究</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/27/aho-corasicksuan-fa.html"><span class="pl__circle"></span><span class="pl__title">Aho-Corasick算法</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/27/solrsheng-lue-ri-zhi.html"><span class="pl__circle"></span><span class="pl__title">显示solr省略的日志</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/21/solrde-shu-zhi-cun-chu-he-fan-wei-cha-xun.html"><span class="pl__circle"></span><span class="pl__title">solr的数值存储和范围查询</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/20/shi-yong-jmxfen-xi-solrzhuang-tai.html"><span class="pl__circle"></span><span class="pl__title">使用JMX分析solr状态</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/18/xiang-liang-kong-jian-mo-xing.html"><span class="pl__circle"></span><span class="pl__title">向量空间模型</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/14/solrman-cha-xun-fen-xi.html"><span class="pl__circle"></span><span class="pl__title">solr慢查询分析</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/07/lucene-ru-men.html"><span class="pl__circle"></span><span class="pl__title">lucene 入门</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/08/30/chang-yong-ming-ling.html"><span class="pl__circle"></span><span class="pl__title">常用命令</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/08/29/solrcha-xun-guo-cheng.html"><span class="pl__circle"></span><span class="pl__title">solr查询过程</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/08/28/solrqi-dong-fen-xi.html"><span class="pl__circle"></span><span class="pl__title">solr启动分析</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2012/08/24/jsmian-xiang-dui-xiang-shi-li.html"><span class="pl__circle"></span><span class="pl__title">js面向对象实例</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/08/16/xian-cheng-chi.html"><span class="pl__circle"></span><span class="pl__title">线程池</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/08/08/vimsu-ji-biao.html"><span class="pl__circle"></span><span class="pl__title">vim速记表</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/08/01/weakhashmapzuo-yong-he-shi-li.html"><span class="pl__circle"></span><span class="pl__title">WeakHashMap作用和实例</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/07/27/java-volatileli-jie.html"><span class="pl__circle"></span><span class="pl__title">java volatile理解</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/07/26/xdebug-500cuo-wu-xian-shi-200cheng-gong-de-bug.html"><span class="pl__circle"></span><span class="pl__title">xdebug:500错误显示200成功的bug</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/07/22/python-zhou-ti-yan-ji.html"><span class="pl__circle"></span><span class="pl__title">python 一周体验记</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/07/13/oauth-jie-shao.html"><span class="pl__circle"></span><span class="pl__title">OAuth 介绍</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/07/07/octopress-introduce.html"><span class="pl__circle"></span><span class="pl__title">octopress 介绍</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/07/06/perl-ipc.html"><span class="pl__circle"></span><span class="pl__title">进程间通信【IPC】</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2011/07/03/perl-epoll.html"><span class="pl__circle"></span><span class="pl__title">Perl使用Epoll优化</span><span class="pl__date">Jul 2011</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2011/07/03/Mogilefs-ReadFile.html"><span class="pl__circle"></span><span class="pl__title">MogileFS读取文件的过程</span><span class="pl__date">Jul 2011</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2011/07/03/Mogilefs-Init.html"><span class="pl__circle"></span><span class="pl__title">MogileFS启动流程</span><span class="pl__date">Jul 2011</span></a>
+        
+        </nav>
+      </div> <!-- end #posts-list -->
+    </aside> <!-- end #sidebar -->
+
+    <div id="post">
+      <div id="pjax">
+        <article id="post__content">
+  <h1 id="post__title" data-identifier="20110703">MogileFS读取文件的过程</h1>
+  <h3 id="domainkey">定义好domain和key就能获取文件内容</h3>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="c1">#!/usr/bin/perl</span>
+
+<span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+<span class="k">use</span> <span class="n">warnings</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">MogileFS::</span><span class="n">Client</span><span class="p">;</span>
+
+<span class="k">my</span> <span class="nv">%new_opt</span> <span class="o">=</span> <span class="p">(</span> 
+    <span class="n">hosts</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s">&quot;127.0.0.1:7001&quot;</span><span class="p">],</span>
+    <span class="n">domain</span> <span class="o">=&gt;</span> <span class="s">&quot;127.0.0.1::test&quot;</span><span class="p">,</span>
+<span class="p">);</span> 
+<span class="k">my</span> <span class="nv">$mogc</span> <span class="o">=</span> <span class="nn">MogileFS::</span><span class="n">Client</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="nv">%new_opt</span><span class="p">);</span>
+
+<span class="k">my</span> <span class="nv">$key</span> <span class="o">=</span> <span class="s">&quot;test_key_2&quot;</span><span class="p">;</span>
+<span class="k">my</span> <span class="nv">$fd</span> <span class="o">=</span> <span class="nv">$mogc</span><span class="o">-&gt;</span><span class="n">read_file</span><span class="p">(</span><span class="nv">$key</span><span class="p">);</span>
+<span class="k">print</span> <span class="k">while</span><span class="sr">&lt;$fd&gt;</span><span class="p">;</span></code></pre></div>
+
+<!-- more -->
+
+<h3 id="mogilefsclientmogilefsserver">MogileFS::Client与MogileFS::Server通信</h3>
+
+<p>通过get_paths取得文件的url路径 
+MogileFS::ClientHTTPFile通过HTTP获取文件句柄 <br />
+IO::WrapTie可以让返回的内容当文件句柄使用</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">sub </span><span class="nf">read_file</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nn">MogileFS::</span><span class="n">Client</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+    
+    <span class="k">my</span> <span class="nv">@paths</span> <span class="o">=</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">get_paths</span><span class="p">(</span><span class="nv">@_</span><span class="p">);</span>
+    
+    <span class="k">my</span> <span class="nv">$path</span> <span class="o">=</span> <span class="nb">shift</span> <span class="nv">@paths</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="k">if</span> <span class="o">!</span><span class="nv">$path</span><span class="p">;</span>
+
+    <span class="k">my</span> <span class="nv">@backup_dests</span> <span class="o">=</span> <span class="nb">map</span> <span class="p">{</span> <span class="p">[</span> <span class="nb">undef</span><span class="p">,</span> <span class="nv">$_</span> <span class="p">]</span> <span class="p">}</span> <span class="nv">@paths</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nn">IO::WrapTie::</span><span class="n">wraptie</span><span class="p">(</span><span class="s">&#39;MogileFS::ClientHTTPFile&#39;</span><span class="p">,</span>
+                                <span class="n">path</span>         <span class="o">=&gt;</span> <span class="nv">$path</span><span class="p">,</span>
+                                <span class="n">backup_dests</span> <span class="o">=&gt;</span> <span class="o">\</span><span class="nv">@backup_dests</span><span class="p">,</span>
+                                <span class="n">readonly</span>     <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+                                <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<p>get_paths调用MogileFS::Backend的do_request方法</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">my</span> <span class="nv">$res</span> <span class="o">=</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">backend</span><span class="p">}</span><span class="o">-&gt;</span><span class="n">do_request</span>
+        <span class="p">(</span><span class="s">&quot;get_paths&quot;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="n">domain</span> <span class="o">=&gt;</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">domain</span><span class="p">},</span>
+            <span class="n">key</span>    <span class="o">=&gt;</span> <span class="nv">$key</span><span class="p">,</span>
+            <span class="n">noverify</span> <span class="o">=&gt;</span> <span class="nv">$noverify</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">zone</span>   <span class="o">=&gt;</span> <span class="nv">$zone</span><span class="p">,</span>
+        <span class="nv">%extra_args</span><span class="p">,</span>
+        <span class="p">})</span> <span class="ow">or</span> <span class="k">return</span> <span class="p">();</span></code></pre></div>
+
+<p>MogileFS::Backend发送信息 </p>
+
+<p>消息的内容是get_paths *****</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">my</span> <span class="nn">MogileFS::</span><span class="n">Backend</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+<span class="k">my</span> <span class="p">(</span><span class="nv">$cmd</span><span class="p">,</span> <span class="nv">$args</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span> 
+<span class="k">my</span> <span class="nv">$argstr</span> <span class="o">=</span> <span class="n">_encode_url_string</span><span class="p">(</span><span class="nv">%$args</span><span class="p">);</span>
+<span class="k">my</span> <span class="nv">$req</span> <span class="o">=</span> <span class="s">&quot;$cmd $argstr\r\n&quot;</span><span class="p">;</span>
+<span class="nv">$rv</span> <span class="o">=</span> <span class="nb">send</span><span class="p">(</span><span class="nv">$sock</span><span class="p">,</span> <span class="nv">$req</span><span class="p">,</span> <span class="nv">$FLAG_NOSIGNAL</span><span class="p">);</span></code></pre></div>
+
+<h3 id="section">服务器端接收消息</h3>
+<p>$code-&gt;($state);是关键，主进程监听到了事件去执行回调</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="c1"># Fetch handles with read events</span>
+<span class="k">while</span> <span class="p">(</span><span class="nv">@poll</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="p">(</span><span class="nv">$fd</span><span class="p">,</span> <span class="nv">$state</span><span class="p">)</span> <span class="o">=</span> <span class="nb">splice</span><span class="p">(</span><span class="nv">@poll</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="k">next</span> <span class="k">unless</span> <span class="nv">$state</span><span class="p">;</span>
+
+    <span class="nv">$pob</span> <span class="o">=</span> <span class="nv">$DescriptorMap</span><span class="p">{</span><span class="nv">$fd</span><span class="p">};</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$pob</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$code</span> <span class="o">=</span> <span class="nv">$OtherFds</span><span class="p">{</span><span class="nv">$fd</span><span class="p">})</span> <span class="p">{</span>
+            <span class="nv">$code</span><span class="o">-&gt;</span><span class="p">(</span><span class="nv">$state</span><span class="p">);</span>
+        <span class="p">}</span>    
+        <span class="k">next</span><span class="p">;</span>
+    <span class="p">}</span>    
+
+    <span class="nv">$pob</span><span class="o">-&gt;</span><span class="n">event_read</span>   <span class="k">if</span> <span class="nv">$state</span> <span class="o">&amp;</span> <span class="n">POLLIN</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nv">$pob</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">closed</span><span class="p">};</span>
+    <span class="nv">$pob</span><span class="o">-&gt;</span><span class="n">event_write</span>  <span class="k">if</span> <span class="nv">$state</span> <span class="o">&amp;</span> <span class="n">POLLOUT</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nv">$pob</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">closed</span><span class="p">};</span>
+    <span class="nv">$pob</span><span class="o">-&gt;</span><span class="n">event_err</span>    <span class="k">if</span> <span class="nv">$state</span> <span class="o">&amp;</span> <span class="n">POLLERR</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nv">$pob</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">closed</span><span class="p">};</span>
+    <span class="nv">$pob</span><span class="o">-&gt;</span><span class="n">event_hup</span>    <span class="k">if</span> <span class="nv">$state</span> <span class="o">&amp;</span> <span class="n">POLLHUP</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nv">$pob</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">closed</span><span class="p">};</span>
+<span class="p">}</span></code></pre></div>
+
+<p>这就是回调函数，主进程接收请求，创建个MogileFS::Connection::Client
+MogileFS::Connection::Client会继承于Danga::Socket,会加到%DescriptorMap里,所以事件循环可以读取到
+$pob-&gt;event_read   if $state &amp; POLLIN &amp;&amp; ! $pob-&gt;{closed};开始读取</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="nn">Danga::</span><span class="n">Socket</span><span class="o">-&gt;</span><span class="n">AddOtherFds</span><span class="p">(</span> <span class="nb">fileno</span><span class="p">(</span><span class="nv">$server</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">sub </span><span class="p">{</span>
+    <span class="k">while</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$csock</span> <span class="o">=</span> <span class="nv">$server</span><span class="o">-&gt;</span><span class="nb">accept</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nn">MogileFS::Connection::</span><span class="n">Client</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="nv">$csock</span><span class="p">);</span><span class="c1">#也会被加到%DescriptorMap</span>
+    <span class="p">}</span>   
+<span class="p">}</span> <span class="p">);</span></code></pre></div>
+
+<h3 id="mogilefsconnectionclient">MogileFS::Connection::Client接收消息和处理</h3>
+<p>调用handle_request
+tips:$self-&gt;{read_buf} =~ reg 取得需要的东西，并清空</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="c1"># Client</span>
+<span class="k">sub </span><span class="nf">event_read</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nn">MogileFS::Connection::</span><span class="n">Client</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+
+    <span class="k">my</span> <span class="nv">$bref</span> <span class="o">=</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="nb">read</span><span class="p">(</span><span class="mi">1024</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="nb">close</span> <span class="k">unless</span> <span class="nb">defined</span> <span class="nv">$bref</span><span class="p">;</span>
+    <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">read_buf</span><span class="p">}</span> <span class="o">.=</span> <span class="nv">$$bref</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">read_buf</span><span class="p">}</span> <span class="o">=~</span> <span class="sr">s/^(.*?)\r?\n//</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">next</span> <span class="k">unless</span> <span class="nb">length</span> <span class="nv">$1</span><span class="p">;</span> 
+        <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">handle_request</span><span class="p">(</span><span class="nv">$1</span><span class="p">);</span>
+    <span class="p">}</span>   
+<span class="p">}</span></code></pre></div>
+
+<p>调用MogileFS::ProcManager-&gt;EnqueueCommandRequest来处理get_paths指令
+tips:看到可以使用telnet 127.0.0.1 7001连接上server使用!h来获取帮助!stat可以查看服务器状态</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">sub </span><span class="nf">handle_request</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span> <span class="nv">$line</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+
+    <span class="c1"># if it&#39;s just &#39;help&#39;, &#39;h&#39;, &#39;?&#39;, or something, do that</span>
+    <span class="c1">#if ((substr($line, 0, 1) eq &#39;?&#39;) || ($line eq &#39;help&#39;)) {</span>
+    <span class="c1">#    MogileFS::ProcManager-&gt;SendHelp($_[1]);</span>
+    <span class="c1">#    return;</span>
+    <span class="c1">#}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$line</span> <span class="o">=~</span><span class="sr"> /^!(\S+)(?:\s+(.+))?$/</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">my</span> <span class="p">(</span><span class="nv">$cmd</span><span class="p">,</span> <span class="nv">$args</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$1</span><span class="p">,</span> <span class="nv">$2</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">handle_admin_command</span><span class="p">(</span><span class="nv">$cmd</span><span class="p">,</span> <span class="nv">$args</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nn">MogileFS::</span><span class="n">ProcManager</span><span class="o">-&gt;</span><span class="n">EnqueueCommandRequest</span><span class="p">(</span><span class="nv">$line</span><span class="p">,</span> <span class="nv">$self</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<p>加到待处理等列里，并开始处理</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">sub </span><span class="nf">EnqueueCommandRequest</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="p">(</span><span class="nv">$class</span><span class="p">,</span> <span class="nv">$line</span><span class="p">,</span> <span class="nv">$client</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span> 
+    <span class="nb">push</span> <span class="nv">@PendingQueries</span><span class="p">,</span> <span class="p">[</span>
+                           <span class="nv">$client</span><span class="p">,</span>
+                           <span class="p">(</span><span class="nv">$client</span><span class="o">-&gt;</span><span class="n">peer_ip_string</span> <span class="o">||</span> <span class="s">&#39;0.0.0.0&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s">&quot; $line&quot;</span>
+                           <span class="p">];</span>  
+    <span class="nn">MogileFS::</span><span class="n">ProcManager</span><span class="o">-&gt;</span><span class="n">ProcessQueues</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>如果有空闲的query-worker和待处理的队列，那就开始行动
+所以queryworker的数量决定了，MogileFS的处理能力，当然加大数量也会加大DB压力，memcache能缓解部分压力
+$Mappings{$worker-&gt;{fd}} = $clref;设置Mappings，等下返回结果时，这个client句柄还要用的
+$worker-&gt;write(“$worker-&gt;{pid}-$worker-&gt;{reqid} $clref-&gt;[1]\r\n”);向真正的worker发送消息，让他干活
+tips:例子123-455 10.2.3.123 get_paths foo=bar&amp;blah=bar\r\n
+$Stats都是存储当前服务器状态的，times_out_of_qworkers可以看出worker是不是处理不过来</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">sub </span><span class="nf">ProcessQueues</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">if</span> <span class="nv">$IsChild</span><span class="p">;</span>
+
+    <span class="c1"># try to match up a client with a worker</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nv">@IdleQueryWorkers</span> <span class="o">&amp;&amp;</span> <span class="nv">@PendingQueries</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1"># get client that isn&#39;t closed</span>
+        <span class="k">my</span> <span class="nv">$clref</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nv">$clref</span> <span class="o">&amp;&amp;</span> <span class="nv">@PendingQueries</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$clref</span> <span class="o">=</span> <span class="nb">shift</span> <span class="nv">@PendingQueries</span>
+                <span class="ow">or</span> <span class="k">next</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$clref</span><span class="o">-&gt;</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">closed</span><span class="p">})</span> <span class="p">{</span>
+                <span class="nv">$clref</span> <span class="o">=</span> <span class="nb">undef</span><span class="p">;</span>
+                <span class="k">next</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">next</span> <span class="k">unless</span> <span class="nv">$clref</span><span class="p">;</span>
+
+        <span class="c1"># get worker and make sure it&#39;s not closed already</span>
+        <span class="k">my</span> <span class="nn">MogileFS::Connection::</span><span class="n">Worker</span> <span class="nv">$worker</span> <span class="o">=</span> <span class="nb">shift</span> <span class="nv">@IdleQueryWorkers</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">defined</span> <span class="nv">$worker</span> <span class="o">||</span> <span class="nv">$worker</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">closed</span><span class="p">})</span> <span class="p">{</span>
+            <span class="nb">unshift</span> <span class="nv">@PendingQueries</span><span class="p">,</span> <span class="nv">$clref</span><span class="p">;</span>
+            <span class="k">next</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1"># put in mapping and send data to worker</span>
+        <span class="nb">push</span> <span class="nv">@$clref</span><span class="p">,</span> <span class="nn">Time::HiRes::</span><span class="n">time</span><span class="p">();</span>
+        <span class="nv">$Mappings</span><span class="p">{</span><span class="nv">$worker</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">fd</span><span class="p">}}</span> <span class="o">=</span> <span class="nv">$clref</span><span class="p">;</span>
+        <span class="nv">$Stats</span><span class="p">{</span><span class="n">queries</span><span class="p">}</span><span class="o">++</span><span class="p">;</span>
+
+        <span class="c1"># increment our counter so we know what request counter this is going out</span>
+        <span class="nv">$worker</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">reqid</span><span class="p">}</span><span class="o">++</span><span class="p">;</span>
+        <span class="c1"># so we&#39;re writing a string of the form:</span>
+        <span class="c1">#     123-455 10.2.3.123 get_paths foo=bar&amp;blah=bar\r\n</span>
+        <span class="nv">$worker</span><span class="o">-&gt;</span><span class="nb">write</span><span class="p">(</span><span class="s">&quot;$worker-&gt;{pid}-$worker-&gt;{reqid} $clref-&gt;[1]\r\n&quot;</span><span class="p">);</span>
+
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nv">@PendingQueries</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1"># Don&#39;t like the name. Feel free to change if you find better.</span>
+        <span class="nv">$Stats</span><span class="p">{</span><span class="n">times_out_of_qworkers</span><span class="p">}</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<h3 id="queryworkermogilefsworkerquery">真正的QueryWorker开始干活，MogileFS::Worker::Query</h3>
+
+<p>select判断是否可以读取
+tips:vec($rin, fileno($psock), 1) = 1; 设置2进制数值，如果fileno=5那么返回的数值就是00010000
+sysread取得socket内容
+process_line处理get_paths命令</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">sub </span><span class="nf">work</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$psock</span> <span class="o">=</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">psock</span><span class="p">};</span>
+    <span class="k">my</span> <span class="nv">$rin</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">;</span>
+    <span class="nb">vec</span><span class="p">(</span><span class="nv">$rin</span><span class="p">,</span> <span class="nb">fileno</span><span class="p">(</span><span class="nv">$psock</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+    <span class="k">my</span> <span class="nv">$buf</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">my</span> <span class="nv">$rout</span><span class="p">;</span>
+        <span class="k">unless</span> <span class="p">(</span><span class="nb">select</span><span class="p">(</span><span class="nv">$rout</span><span class="o">=</span><span class="nv">$rin</span><span class="p">,</span> <span class="nb">undef</span><span class="p">,</span> <span class="nb">undef</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">still_alive</span><span class="p">;</span>
+            <span class="k">next</span><span class="p">;</span>
+        <span class="p">}</span>    
+
+        <span class="k">my</span> <span class="nv">$newread</span><span class="p">;</span>
+        <span class="k">my</span> <span class="nv">$rv</span> <span class="o">=</span> <span class="nb">sysread</span><span class="p">(</span><span class="nv">$psock</span><span class="p">,</span> <span class="nv">$newread</span><span class="p">,</span> <span class="mi">1024</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$rv</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">defined</span> <span class="nv">$rv</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nb">die</span> <span class="s">&quot;While reading pipe from parent, got EOF.  Parent&#39;s gone.  Quitting.\n&quot;</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nb">die</span> <span class="s">&quot;Error reading pipe from parent: $!\n&quot;</span><span class="p">;</span>
+            <span class="p">}</span>    
+        <span class="p">}</span>    
+        <span class="nv">$buf</span> <span class="o">.=</span> <span class="nv">$newread</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="nv">$buf</span> <span class="o">=~</span> <span class="sr">s/^(.+?)\r?\n//</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">my</span> <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$1</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="n">process_generic_command</span><span class="p">(</span><span class="o">\</span><span class="nv">$line</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">still_alive</span><span class="p">;</span>  <span class="c1"># no-op for watchdog</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">validate_dbh</span><span class="p">;</span>
+                <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">process_line</span><span class="p">(</span><span class="o">\</span><span class="nv">$line</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<h3 id="mogilefsworkerquery">MogileFS::Worker::Query处理命令</h3>
+<p>process_line调用cmd_get_paths方法</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="c1">#设置符号表</span>
+    <span class="k">my</span> <span class="nv">$cmd_handler</span> <span class="o">=</span> <span class="o">*</span><span class="p">{</span><span class="s">&quot;cmd_$cmd&quot;</span><span class="p">}{</span><span class="n">CODE</span><span class="p">};</span>
+    <span class="nv">$cmd_handler</span><span class="o">-&gt;</span><span class="p">(</span><span class="nv">$self</span><span class="p">,</span> <span class="nv">$args</span><span class="p">);</span></code></pre></div>
+
+<p>MogileFS::Config-&gt;memcache_client 取得memcache
+my $mogfid_memkey = “mogfid:$args-&gt;{dmid}:$key”;这是存fidid的key
+my $devid_memkey = “mogdevids:” . $fid-&gt;id;这是文件存在哪里的缓存key
+&gt;tips:如果没有就查询数据库SELECT devid FROM file_on WHERE fid=?
+万事具备，就差拼url了，执行MogileFS::DevFID-&gt;new($dev, $fid); my $path = $dfid-&gt;get_url; 
+return $self-&gt;ok_line($ret);最终返回带有OK字样的结果 
+&gt;tips:ok_line里 $self-&gt;send_to_parent(“${id}${delay}OK $argline”);通过ipc告诉父进程</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">sub </span><span class="nf">cmd_get_paths</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nn">MogileFS::Worker::</span><span class="n">Query</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$args</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+
+    <span class="c1"># memcache mappings are as follows:</span>
+    <span class="c1">#  mogfid:&lt;dmid&gt;:&lt;dkey&gt; -&gt; fidid</span>
+    <span class="c1">#  mogdevids:&lt;fidid&gt;    -&gt; \@devids  (and TODO: invalidate when the replication or deletion is run!)</span>
+
+    <span class="c1"># if you specify &#39;noverify&#39;, that means a correct answer isn&#39;t needed and memcache can</span>
+    <span class="c1"># be used.</span>
+    <span class="k">my</span> <span class="nv">$memc</span>          <span class="o">=</span> <span class="nn">MogileFS::</span><span class="n">Config</span><span class="o">-&gt;</span><span class="n">memcache_client</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$get_from_memc</span> <span class="o">=</span> <span class="nv">$memc</span> <span class="o">&amp;&amp;</span> <span class="nv">$args</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">noverify</span><span class="p">};</span>
+    <span class="k">my</span> <span class="nv">$memcache_ttl</span>  <span class="o">=</span> <span class="nn">MogileFS::</span><span class="n">Config</span><span class="o">-&gt;</span><span class="n">server_setting_cached</span><span class="p">(</span><span class="s">&quot;memcache_ttl&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="mi">3600</span><span class="p">;</span>
+
+    <span class="c1"># validate domain for plugins</span>
+    <span class="nv">$args</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">dmid</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">check_domain</span><span class="p">(</span><span class="nv">$args</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">err_line</span><span class="p">(</span><span class="s">&#39;domain_not_found&#39;</span><span class="p">);</span>
+
+    <span class="c1"># now invoke the plugin, abort if it tells us to</span>
+    <span class="k">my</span> <span class="nv">$rv</span> <span class="o">=</span> <span class="nn">MogileFS::</span><span class="n">run_global_hook</span><span class="p">(</span><span class="s">&#39;cmd_get_paths&#39;</span><span class="p">,</span> <span class="nv">$args</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">err_line</span><span class="p">(</span><span class="s">&#39;plugin_aborted&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">defined</span> <span class="nv">$rv</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nv">$rv</span><span class="p">;</span>
+
+    <span class="c1"># validate parameters</span>
+    <span class="k">my</span> <span class="nv">$dmid</span> <span class="o">=</span> <span class="nv">$args</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">dmid</span><span class="p">};</span>
+    <span class="k">my</span> <span class="nv">$key</span> <span class="o">=</span> <span class="nv">$args</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">key</span><span class="p">}</span> <span class="ow">or</span> <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">err_line</span><span class="p">(</span><span class="s">&quot;no_key&quot;</span><span class="p">);</span>
+
+    <span class="c1"># We default to returning two possible paths.</span>
+    <span class="c1"># but the client may ask for more if they want.</span>
+    <span class="k">my</span> <span class="nv">$pathcount</span> <span class="o">=</span> <span class="nv">$args</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">pathcount</span><span class="p">}</span> <span class="o">||</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="nv">$pathcount</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="nv">$pathcount</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> 
+ 
+    <span class="c1"># get DB handle </span>
+    <span class="k">my</span> <span class="nv">$fid</span><span class="p">;</span> 
+    <span class="k">my</span> <span class="nv">$need_fid_in_memcache</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+    <span class="k">my</span> <span class="nv">$mogfid_memkey</span> <span class="o">=</span> <span class="s">&quot;mogfid:$args-&gt;{dmid}:$key&quot;</span><span class="p">;</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$get_from_memc</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">if</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$fidid</span> <span class="o">=</span> <span class="nv">$memc</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">(</span><span class="nv">$mogfid_memkey</span><span class="p">))</span> <span class="p">{</span> 
+            <span class="nv">$fid</span> <span class="o">=</span> <span class="nn">MogileFS::</span><span class="n">FID</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="nv">$fidid</span><span class="p">);</span> 
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> 
+            <span class="nv">$need_fid_in_memcache</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+        <span class="p">}</span> 
+    <span class="p">}</span> 
+    <span class="k">unless</span> <span class="p">(</span><span class="nv">$fid</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="nn">Mgd::</span><span class="n">get_store</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">slaves_ok</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> 
+            <span class="nv">$fid</span> <span class="o">=</span> <span class="nn">MogileFS::</span><span class="n">FID</span><span class="o">-&gt;</span><span class="n">new_from_dmid_and_key</span><span class="p">(</span><span class="nv">$dmid</span><span class="p">,</span> <span class="nv">$key</span><span class="p">);</span> 
+        <span class="p">});</span> 
+        <span class="nv">$fid</span> <span class="ow">or</span> <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">err_line</span><span class="p">(</span><span class="s">&quot;unknown_key&quot;</span><span class="p">);</span> 
+    <span class="p">}</span> 
+ 
+    <span class="c1"># add to memcache, if needed.  for an hour. </span>
+    <span class="nv">$memc</span><span class="o">-&gt;</span><span class="n">set</span><span class="p">(</span><span class="nv">$mogfid_memkey</span><span class="p">,</span> <span class="nv">$fid</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">,</span> <span class="nv">$memcache_ttl</span> <span class="p">)</span> <span class="k">if</span> <span class="nv">$need_fid_in_memcache</span> <span class="o">||</span> <span class="p">(</span><span class="nv">$memc</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nv">$get_from_memc</span><span class="p">);</span> 
+ 
+    <span class="k">my</span> <span class="nv">$dmap</span> <span class="o">=</span> <span class="nn">Mgd::</span><span class="n">device_factory</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">map_by_id</span><span class="p">;</span> 
+ 
+    <span class="k">my</span> <span class="nv">$ret</span> <span class="o">=</span> <span class="p">{</span> 
+        <span class="n">paths</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> 
+    <span class="p">};</span> 
+
+    <span class="c1"># find devids that FID is on in memcache or db.</span>
+    <span class="k">my</span> <span class="nv">@fid_devids</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$need_devids_in_memcache</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+    <span class="k">my</span> <span class="nv">$devid_memkey</span> <span class="o">=</span> <span class="s">&quot;mogdevids:&quot;</span> <span class="o">.</span> <span class="nv">$fid</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$get_from_memc</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">if</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$list</span> <span class="o">=</span> <span class="nv">$memc</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">(</span><span class="nv">$devid_memkey</span><span class="p">))</span> <span class="p">{</span> 
+            <span class="nv">@fid_devids</span> <span class="o">=</span> <span class="nv">@$list</span><span class="p">;</span> 
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> 
+            <span class="nv">$need_devids_in_memcache</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+        <span class="p">}</span> 
+    <span class="p">}</span> 
+    <span class="k">unless</span> <span class="p">(</span><span class="nv">@fid_devids</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="nn">Mgd::</span><span class="n">get_store</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">slaves_ok</span><span class="p">(</span><span class="k">sub </span><span class="p">{</span> 
+            <span class="nv">@fid_devids</span> <span class="o">=</span> <span class="nv">$fid</span><span class="o">-&gt;</span><span class="n">devids</span><span class="p">;</span> 
+        <span class="p">});</span> 
+        <span class="nv">$memc</span><span class="o">-&gt;</span><span class="n">set</span><span class="p">(</span><span class="nv">$devid_memkey</span><span class="p">,</span> <span class="o">\</span><span class="nv">@fid_devids</span><span class="p">,</span> <span class="nv">$memcache_ttl</span> <span class="p">)</span> <span class="k">if</span> <span class="nv">$need_devids_in_memcache</span> <span class="o">||</span> <span class="p">(</span><span class="nv">$memc</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nv">$get_from_memc</span><span class="p">);</span> 
+    <span class="p">}</span> 
+ 
+    <span class="k">my</span> <span class="nv">@devices</span> <span class="o">=</span> <span class="nb">map</span> <span class="p">{</span> <span class="nv">$dmap</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$_</span><span class="p">}</span> <span class="p">}</span> <span class="nv">@fid_devids</span><span class="p">;</span> 
+ 
+    <span class="k">my</span> <span class="nv">@sorted_devs</span><span class="p">;</span> 
+    <span class="k">unless</span> <span class="p">(</span><span class="nn">MogileFS::</span><span class="n">run_global_hook</span><span class="p">(</span><span class="s">&#39;cmd_get_paths_order_devices&#39;</span><span class="p">,</span> <span class="o">\</span><span class="nv">@devices</span><span class="p">,</span> <span class="o">\</span><span class="nv">@sorted_devs</span><span class="p">))</span> <span class="p">{</span> 
+        <span class="nv">@sorted_devs</span> <span class="o">=</span> <span class="n">sort_devs_by_utilization</span><span class="p">(</span><span class="nv">@devices</span><span class="p">);</span> 
+    <span class="p">}</span> 
+ 
+    <span class="c1"># keep one partially-bogus path around just in case we have nothing else to send. </span>
+    <span class="k">my</span> <span class="nv">$backup_path</span><span class="p">;</span> 
+ 
+    <span class="c1"># construct result paths </span>
+    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$dev</span> <span class="p">(</span><span class="nv">@sorted_devs</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">next</span> <span class="k">unless</span> <span class="nv">$dev</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$dev</span><span class="o">-&gt;</span><span class="n">can_read_from</span><span class="p">);</span>
+
+        <span class="k">my</span> <span class="nv">$host</span> <span class="o">=</span> <span class="nv">$dev</span><span class="o">-&gt;</span><span class="n">host</span><span class="p">;</span>
+        <span class="k">next</span> <span class="k">unless</span> <span class="nv">$dev</span> <span class="o">&amp;&amp;</span> <span class="nv">$host</span><span class="p">;</span> 
+        <span class="k">my</span> <span class="nv">$dfid</span> <span class="o">=</span> <span class="nn">MogileFS::</span><span class="n">DevFID</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="nv">$dev</span><span class="p">,</span> <span class="nv">$fid</span><span class="p">);</span> 
+        <span class="k">my</span> <span class="nv">$path</span> <span class="o">=</span> <span class="nv">$dfid</span><span class="o">-&gt;</span><span class="n">get_url</span><span class="p">;</span> 
+        <span class="k">my</span> <span class="nv">$currently_down</span> <span class="o">=</span> 
+            <span class="nv">$host</span><span class="o">-&gt;</span><span class="n">observed_unreachable</span> <span class="o">||</span> <span class="nv">$dev</span><span class="o">-&gt;</span><span class="n">observed_unreachable</span><span class="p">;</span> 
+ 
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$currently_down</span><span class="p">)</span> <span class="p">{</span> 
+            <span class="nv">$backup_path</span> <span class="o">=</span> <span class="nv">$path</span><span class="p">;</span> 
+            <span class="k">next</span><span class="p">;</span> 
+        <span class="p">}</span> 
+ 
+        <span class="c1"># only verify size one first one, and never verify if they&#39;ve asked not to </span>
+        <span class="k">next</span> <span class="k">unless</span> 
+            <span class="nv">$ret</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">paths</span><span class="p">}</span>        <span class="o">||</span> 
+            <span class="nv">$args</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">noverify</span><span class="p">}</span>    <span class="o">||</span> 
+            <span class="nv">$dfid</span><span class="o">-&gt;</span><span class="n">size_matches</span><span class="p">;</span> 
+ 
+        <span class="k">my</span> <span class="nv">$n</span> <span class="o">=</span> <span class="o">++</span><span class="nv">$ret</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">paths</span><span class="p">};</span> 
+        <span class="nv">$ret</span><span class="o">-&gt;</span><span class="p">{</span><span class="s">&quot;path$n&quot;</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$path</span><span class="p">;</span> 
+        <span class="k">last</span> <span class="k">if</span> <span class="nv">$n</span> <span class="o">==</span> <span class="nv">$pathcount</span><span class="p">;</span>   <span class="c1"># one verified, one likely seems enough for now.  time will tell. </span>
+    <span class="p">}</span> 
+
+    <span class="c1"># use our backup path if all else fails</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$backup_path</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nv">$ret</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">paths</span><span class="p">})</span> <span class="p">{</span>
+        <span class="nv">$ret</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">paths</span><span class="p">}</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nv">$ret</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">path1</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$backup_path</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">ok_line</span><span class="p">(</span><span class="nv">$ret</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">sub </span><span class="nf">ok_line</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nn">MogileFS::Worker::</span><span class="n">Query</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+
+    <span class="k">my</span> <span class="nv">$delay</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">querystarttime</span><span class="p">})</span> <span class="p">{</span>
+        <span class="nv">$delay</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%.4f &quot;</span><span class="p">,</span> <span class="nn">Time::HiRes::</span><span class="n">tv_interval</span><span class="p">(</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">querystarttime</span><span class="p">}</span> <span class="p">));</span>
+        <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">querystarttime</span><span class="p">}</span> <span class="o">=</span> <span class="nb">undef</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">my</span> <span class="nv">$id</span> <span class="o">=</span> <span class="nb">defined</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">reqid</span><span class="p">}</span> <span class="p">?</span> <span class="s">&quot;$self-&gt;{reqid} &quot;</span> <span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">;</span>
+
+    <span class="k">my</span> <span class="nv">$args</span> <span class="o">=</span> <span class="nb">shift</span> <span class="o">||</span> <span class="p">{};</span>
+    <span class="k">my</span> <span class="nv">$argline</span> <span class="o">=</span> <span class="nb">join</span><span class="p">(</span><span class="s">&#39;&amp;&#39;</span><span class="p">,</span> <span class="nb">map</span> <span class="p">{</span> <span class="n">eurl</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="o">.</span> <span class="s">&quot;=&quot;</span> <span class="o">.</span> <span class="n">eurl</span><span class="p">(</span><span class="nv">$args</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$_</span><span class="p">})</span> <span class="p">}</span> <span class="nb">keys</span> <span class="nv">%$args</span><span class="p">);</span>
+    <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">send_to_parent</span><span class="p">(</span><span class="s">&quot;${id}${delay}OK $argline&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<h3 id="mogilefsconnectionworkerok">主进程还在事件循环，MogileFS::Connection::Worker接受刚才的OK数据</h3>
+<p>因为是queryworker所以调用HandleQueryWorkerResponse</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">sub </span><span class="nf">event_read</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nn">MogileFS::Connection::</span><span class="n">Worker</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+
+    <span class="c1"># if we read data from it, it&#39;s not blocked on something else.</span>
+    <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">note_alive</span><span class="p">;</span>
+
+    <span class="k">my</span> <span class="nv">$bref</span> <span class="o">=</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="nb">read</span><span class="p">(</span><span class="mi">1024</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="nb">close</span><span class="p">()</span> <span class="k">unless</span> <span class="nb">defined</span> <span class="nv">$bref</span><span class="p">;</span>
+    <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">read_buf</span><span class="p">}</span> <span class="o">.=</span> <span class="nv">$$bref</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">read_buf</span><span class="p">}</span> <span class="o">=~</span> <span class="sr">s/^(.+?)\r?\n//</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">my</span> <span class="nv">$line</span> <span class="o">=</span> <span class="nv">$1</span><span class="p">;</span> 
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="n">job</span> <span class="ow">eq</span> <span class="s">&#39;queryworker&#39;</span> <span class="o">&amp;&amp;</span> <span class="nv">$line</span> <span class="o">!~</span> <span class="sr">/^(?:\:|error|debug)/</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nn">MogileFS::</span><span class="n">ProcManager</span><span class="o">-&gt;</span><span class="n">HandleQueryWorkerResponse</span><span class="p">(</span><span class="nv">$self</span><span class="p">,</span> <span class="nv">$line</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nn">MogileFS::</span><span class="n">ProcManager</span><span class="o">-&gt;</span><span class="n">HandleChildRequest</span><span class="p">(</span><span class="nv">$self</span><span class="p">,</span> <span class="nv">$line</span><span class="p">);</span>
+        <span class="p">}</span>   
+    <span class="p">}</span>   
+<span class="p">}</span></code></pre></div>
+
+<h3 id="section-1">真正的返回数据</h3>
+<p>my ($client, $jobstr, $starttime) = @{ $Mappings{$worker-&gt;{fd}} };还记得Mappings吗，就是这里用
+$client-&gt;write(“$res\r\n”);写入数据，客户端接受</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="c1"># called when we get a response from a worker.  this reenqueues the</span>
+<span class="c1"># worker so it can handle another response as well as passes the answer</span>
+<span class="c1"># back on to the client.</span>
+<span class="k">sub </span><span class="nf">HandleQueryWorkerResponse</span> <span class="p">{</span>
+    <span class="c1"># got a response from a worker</span>
+    <span class="k">my</span> <span class="nn">MogileFS::Connection::</span><span class="n">Worker</span> <span class="nv">$worker</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$line</span><span class="p">;</span>
+    <span class="p">(</span><span class="nb">undef</span><span class="p">,</span> <span class="nv">$worker</span><span class="p">,</span> <span class="nv">$line</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nn">Mgd::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;ASSERT: ProcManager (Child) got worker response: $line&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nv">$IsChild</span><span class="p">;</span>
+    <span class="k">return</span> <span class="k">unless</span> <span class="nv">$worker</span> <span class="o">&amp;&amp;</span> <span class="nv">$Mappings</span><span class="p">{</span><span class="nv">$worker</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">fd</span><span class="p">}};</span>
+
+    <span class="c1"># get the client we&#39;re working with (if any)</span>
+    <span class="k">my</span> <span class="p">(</span><span class="nv">$client</span><span class="p">,</span> <span class="nv">$jobstr</span><span class="p">,</span> <span class="nv">$starttime</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@</span><span class="p">{</span> <span class="nv">$Mappings</span><span class="p">{</span><span class="nv">$worker</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">fd</span><span class="p">}}</span> <span class="p">};</span>
+
+    <span class="c1"># if we have no client, then we just got a standard message from</span>
+    <span class="c1"># the queryworker and need to pass it up the line</span>
+    <span class="k">return</span> <span class="nn">MogileFS::</span><span class="n">ProcManager</span><span class="o">-&gt;</span><span class="n">HandleChildRequest</span><span class="p">(</span><span class="nv">$worker</span><span class="p">,</span> <span class="nv">$line</span><span class="p">)</span> <span class="k">if</span> <span class="o">!</span><span class="nv">$client</span><span class="p">;</span>
+
+    <span class="c1"># at this point it was a command response, but if the client has gone</span>
+    <span class="c1"># away, just reenqueue this query worker</span>
+    <span class="k">return</span> <span class="nn">MogileFS::</span><span class="n">ProcManager</span><span class="o">-&gt;</span><span class="n">NoteIdleQueryWorker</span><span class="p">(</span><span class="nv">$worker</span><span class="p">)</span> <span class="k">if</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">closed</span><span class="p">};</span>
+
+    <span class="c1"># &lt;numeric id&gt; [client-side time to complete] &lt;response&gt;</span>
+    <span class="k">my</span> <span class="p">(</span><span class="nv">$time</span><span class="p">,</span> <span class="nv">$id</span><span class="p">,</span> <span class="nv">$res</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$line</span> <span class="o">=~</span><span class="sr"> /^(\d+-\d+)\s+(\-?\d+\.\d+)\s+(.+)$/</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1"># save time and response for use later</span>
+        <span class="c1"># Note the optional negative sign in the regexp.  Somebody</span>
+        <span class="c1"># on the mailing list was getting a time of -0.0000, causing</span>
+        <span class="c1"># broken connections.</span>
+        <span class="p">(</span><span class="nv">$id</span><span class="p">,</span> <span class="nv">$time</span><span class="p">,</span> <span class="nv">$res</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$1</span><span class="p">,</span> <span class="nv">$2</span><span class="p">,</span> <span class="nv">$3</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1"># now, if it doesn&#39;t match</span>
+    <span class="k">unless</span> <span class="p">(</span><span class="nv">$id</span> <span class="o">&amp;&amp;</span> <span class="nv">$id</span> <span class="ow">eq</span> <span class="s">&quot;$worker-&gt;{pid}-$worker-&gt;{reqid}&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$id</span>   <span class="o">=</span> <span class="s">&quot;&lt;undef&gt;&quot;</span> <span class="k">unless</span> <span class="nb">defined</span> <span class="nv">$id</span><span class="p">;</span>
+        <span class="nv">$line</span> <span class="o">=</span> <span class="s">&quot;&lt;undef&gt;&quot;</span> <span class="k">unless</span> <span class="nb">defined</span> <span class="nv">$line</span><span class="p">;</span>
+        <span class="nv">$line</span> <span class="o">=~</span> <span class="sr">s/\n/\\n/g</span><span class="p">;</span>
+        <span class="nv">$line</span> <span class="o">=~</span> <span class="sr">s/\r/\\r/g</span><span class="p">;</span>
+        <span class="nn">Mgd::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Worker responded with id $id (line: [$line]), but expected id $worker-&gt;{pid}-$worker-&gt;{reqid}, killing&quot;</span><span class="p">);</span>
+        <span class="nv">$client</span><span class="o">-&gt;</span><span class="nb">close</span><span class="p">(</span><span class="s">&#39;worker_mismatch&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nn">MogileFS::</span><span class="n">ProcManager</span><span class="o">-&gt;</span><span class="n">AskWorkerToDie</span><span class="p">(</span><span class="nv">$worker</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1"># now time this interval and add to @RecentQueries</span>
+    <span class="k">my</span> <span class="nv">$tinterval</span> <span class="o">=</span> <span class="nn">Time::HiRes::</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="nv">$starttime</span><span class="p">;</span>
+    <span class="nb">push</span> <span class="nv">@RecentQueries</span><span class="p">,</span> <span class="nb">sprintf</span><span class="p">(</span><span class="s">&quot;%s %.4f %s&quot;</span><span class="p">,</span> <span class="nv">$jobstr</span><span class="p">,</span> <span class="nv">$tinterval</span><span class="p">,</span> <span class="nv">$time</span><span class="p">);</span>
+    <span class="nb">shift</span> <span class="nv">@RecentQueries</span> <span class="k">if</span> <span class="nb">scalar</span><span class="p">(</span><span class="nv">@RecentQueries</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">;</span>
+
+    <span class="c1"># send text to client, put worker back in queue</span>
+    <span class="nv">$client</span><span class="o">-&gt;</span><span class="nb">write</span><span class="p">(</span><span class="s">&quot;$res\r\n&quot;</span><span class="p">);</span>
+    <span class="nn">MogileFS::</span><span class="n">ProcManager</span><span class="o">-&gt;</span><span class="n">NoteIdleQueryWorker</span><span class="p">(</span><span class="nv">$worker</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<h3 id="section-2">绕了一大圈终于回来了</h3>
+<p>_wait_for_readability等待socket有返回数据
+如果OK就返回decode的引用</p>
+
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="c1"># wait up to 3 seconds for the socket to come to life</span>
+<span class="k">unless</span> <span class="p">(</span><span class="n">_wait_for_readability</span><span class="p">(</span><span class="nb">fileno</span><span class="p">(</span><span class="nv">$sock</span><span class="p">),</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">timeout</span><span class="p">}))</span> <span class="p">{</span>
+    <span class="nb">close</span><span class="p">(</span><span class="nv">$sock</span><span class="p">);</span>
+    <span class="nv">$self</span><span class="o">-&gt;</span><span class="n">run_hook</span><span class="p">(</span><span class="s">&#39;do_request_read_timeout&#39;</span><span class="p">,</span> <span class="nv">$cmd</span><span class="p">,</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">last_host_connected</span><span class="p">});</span>
+    <span class="nb">undef</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">sock_cache</span><span class="p">};</span>
+    <span class="k">return</span> <span class="n">_fail</span><span class="p">(</span><span class="s">&quot;timed out after $self-&gt;{timeout}s against $self-&gt;{last_host_connected} when sending command: [$req]&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">my</span> <span class="nv">$line</span> <span class="o">=</span> <span class="sr">&lt;$sock&gt;</span><span class="p">;</span>
+<span class="c1"># OK &lt;arg_len&gt; &lt;response&gt;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$line</span> <span class="o">=~</span><span class="sr"> /^OK\s+\d*\s*(\S*)/</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nv">$args</span> <span class="o">=</span> <span class="n">_decode_url_string</span><span class="p">(</span><span class="nv">$1</span><span class="p">);</span>
+    <span class="n">_debug</span><span class="p">(</span><span class="s">&quot;RETURN_VARS: &quot;</span><span class="p">,</span> <span class="nv">$args</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nv">$args</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+
+</article> <!-- end #post__content -->
+
+<div id="post__share">
+  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=http://wanghd.com/%E5%90%8E%E7%AB%AF/2011/07/03/Mogilefs-ReadFile.html&text=MogileFS读取文件的过程" target="_blank"></a>
+  <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
+  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=http://wanghd.com/%E5%90%8E%E7%AB%AF/2011/07/03/Mogilefs-ReadFile.html&title=MogileFS读取文件的过程" target="_blank"></a>
+</div> <!-- end #post__share -->
+
+<div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'wanghdcom'; // required: replace example with your forum shortname
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+</div> <!-- end #disqus_thread -->
+
+<p id="copyright">Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>&nbsp;&nbsp;|&nbsp;&nbsp;Theme <a href="https://github.com/P233/3-Jekyll" target="_blank">3-Jekyll</a></p>
+
+      </div> <!-- end #pjax -->
+
+      <div id="post__toc-trigger">
+        <div id="post__toc">
+          <span id="post__toc-title">Table of Contents</span>
+          <ul id="post__toc-ul"></ul>
+        </div>
+      </div>
+    </div> <!-- end #post -->
+
+    <button id="js-fullscreen"><span id="icon-arrow" class="fontello"></span></button>
+
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/jquery.pjax.js"></script>
+    <script src="/assets/js/nprogress.js"></script>
+    <script src="/assets/js/script.js"></script>
+  </body>
+</html>

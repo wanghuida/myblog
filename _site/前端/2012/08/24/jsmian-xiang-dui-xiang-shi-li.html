@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
+
+    <title>js面向对象实例</title>
+    <meta name="description" content="">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+  </head>
+  <body>
+    <aside id="sidebar">
+      <nav id="tags">
+        <a href="/index.html" id="avatar"></a>
+
+        <ul id="tags__ul">
+          <li id="js-label1" class="tags__li tags-btn active">所有文章</li>
+          <li id="js-label2" class="tags__li tags-btn">后端</li>
+          <li id="js-label3" class="tags__li tags-btn">移动</li>
+          <li id="js-label4" class="tags__li tags-btn">前端</li>
+          <li id="js-label5" class="tags__li tags-btn">系统</li>
+          <li id="js-label6" class="tags__li tags-btn">数据存储</li>
+        </ul>
+
+        <div id="tags__bottom">
+          <a href="mailto:wanghuida258@aliyun.com" id="icon-email" class="tags-btn fontello"></a>
+          <a href="/rss.xml" id="icon-feed" class="tags-btn fontello"></a>
+        </div>
+      </nav> <!-- end #tags -->
+
+      <div id="posts-list">
+        <!--<form action="" id="search-form">
+          <a href="/index.html" id="mobile-avatar"></a>
+          NOTE: input field is disabled by default 
+          <input id="search-input" type="text" placeholder="Search..." disabled >
+        </form>-->
+
+        <nav id="pl__container">
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2014/07/16/angularjs-cart.html"><span class="pl__circle"></span><span class="pl__title">AngularJS 购物车</span><span class="pl__date">Jul 2014</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2014/07/16/angularjs-helloworld.html"><span class="pl__circle"></span><span class="pl__title">AngularJS 初探</span><span class="pl__date">Jul 2014</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2014/06/10/fpm-used-all-process.html"><span class="pl__circle"></span><span class="pl__title">fpm的所有进程都占用 出现假死</span><span class="pl__date">Jun 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/06/07/mac-android-mobile.html"><span class="pl__circle"></span><span class="pl__title">mac 下识别android手机</span><span class="pl__date">Jun 2014</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2014/05/29/generate-short-link.html"><span class="pl__circle"></span><span class="pl__title">生成短链接</span><span class="pl__date">May 2014</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2014/05/22/hive-load-nginx-log.html"><span class="pl__circle"></span><span class="pl__title">hive 读取nginx 日志</span><span class="pl__date">May 2014</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2014/04/23/fuzzy-image.html"><span class="pl__circle"></span><span class="pl__title">图像的模糊处理</span><span class="pl__date">Apr 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/02/05/ios-bezier-curves.html"><span class="pl__circle"></span><span class="pl__title">ios 用关键帧按贝塞尔曲线移动</span><span class="pl__date">Feb 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/27/ios-third-share.html"><span class="pl__circle"></span><span class="pl__title">ios 第三方库大汇总</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/27/ios-static-lib.html"><span class="pl__circle"></span><span class="pl__title">ios 静态库</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/27/calayer-example.html"><span class="pl__circle"></span><span class="pl__title">CALayer 常用例子</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/27/uitableview-3.html"><span class="pl__circle"></span><span class="pl__title">uitableview (3)</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2014/01/26/select-for-update.html"><span class="pl__circle"></span><span class="pl__title">select for update</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/26/uitableview-2.html"><span class="pl__circle"></span><span class="pl__title">UITableView (2)</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/24/uitableview-1.html"><span class="pl__circle"></span><span class="pl__title">UITableView (1)</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="移动 pl__all" href="/%E7%A7%BB%E5%8A%A8/2014/01/22/ios-code-helloworld.html"><span class="pl__circle"></span><span class="pl__title">纯代码写ios</span><span class="pl__date">Jan 2014</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2013/07/25/304huan-cun-tu-pian-mei-you-hong-fa-loadshi-jian.html"><span class="pl__circle"></span><span class="pl__title">304缓存图片没有触发load事件</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/07/18/ubuntu-keychain-shi-yong.html"><span class="pl__circle"></span><span class="pl__title">ubuntu keychain 使用</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/07/17/linux-cao-zuo-ji-jin.html"><span class="pl__circle"></span><span class="pl__title">linux 操作集锦</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/07/17/mmd-backend.html"><span class="pl__circle"></span><span class="pl__title">创业公司的运维工作</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/07/15/cutycapt-htmlye-mian-sheng-cheng-tu-pian-fen-xiang-wei-bo.html"><span class="pl__circle"></span><span class="pl__title">CutyCapt html页面生成图片 分享微博</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/07/02/phptu-pian-chu-li-ubuntupei-zhi.html"><span class="pl__circle"></span><span class="pl__title">php图片处理ubuntu配置</span><span class="pl__date">Jul 2013</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2013/06/27/fu-dong-ju-zhong.html"><span class="pl__circle"></span><span class="pl__title">浮动居中</span><span class="pl__date">Jun 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/05/30/sshfs.html"><span class="pl__circle"></span><span class="pl__title">sshfs</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/05/29/cacti-spinede-an-zhuang-pei-zhi.html"><span class="pl__circle"></span><span class="pl__title">cacti spine的安装配置</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/05/29/sysdescr-unknown-object-identifier-sub-id-not-found-top-sysdescr.html"><span class="pl__circle"></span><span class="pl__title">解决 sysDescr: Unknown Object Identifier (Sub-id not found: (top)  sysDescr)</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/05/24/sqlalchemy-ding-yi-mo-xing.html"><span class="pl__circle"></span><span class="pl__title">sqlalchemy 定义模型</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/05/24/yii-yin-cang-index-dot-php.html"><span class="pl__circle"></span><span class="pl__title">yii 隐藏index.php RESTful nginx配置</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/05/24/yii-yong-hu-yan-zheng.html"><span class="pl__circle"></span><span class="pl__title">yii 用户验证</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/05/23/yii-ri-zhi.html"><span class="pl__circle"></span><span class="pl__title">yii 文件日志</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2013/05/23/jquery-validation.html"><span class="pl__circle"></span><span class="pl__title">jquery validation</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/05/02/ying-wen-ubuntuan-zhuang-zhong-wen-bao.html"><span class="pl__circle"></span><span class="pl__title">英文Ubuntu安装中文包</span><span class="pl__date">May 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/04/07/zhu-cong-qie-huan.html"><span class="pl__circle"></span><span class="pl__title">主从切换</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/04/07/ke-long-slave.html"><span class="pl__circle"></span><span class="pl__title">克隆 slave</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/04/04/5fen-zhong-li-jie-iptables.html"><span class="pl__circle"></span><span class="pl__title">5分钟理解iptables</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/04/03/ubuntu-routeming-ling.html"><span class="pl__circle"></span><span class="pl__title">ubuntu route命令</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/04/03/tcpdump-jian-ming-jiao-cheng.html"><span class="pl__circle"></span><span class="pl__title">tcpdump 简明教程</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/04/03/ibm-x3650-zhong-zhuang-xi-tong.html"><span class="pl__circle"></span><span class="pl__title">ibm x3650 重装系统</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/04/03/fu-wu-qi-zeng-jia-ci-pan.html"><span class="pl__circle"></span><span class="pl__title">ubuntu服务器增加磁盘</span><span class="pl__date">Apr 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/03/31/nginx-pei-zhi-mo-ban.html"><span class="pl__circle"></span><span class="pl__title">nginx 配置模板</span><span class="pl__date">Mar 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/03/27/ubuntu-xiu-fu-localecuo-wu.html"><span class="pl__circle"></span><span class="pl__title">ubuntu 修复locale错误</span><span class="pl__date">Mar 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/03/05/sqlalchemy-zi-dong-chuang-jian-biao.html"><span class="pl__circle"></span><span class="pl__title">sqlalchemy 自动创建表</span><span class="pl__date">Mar 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-an-quan.html"><span class="pl__circle"></span><span class="pl__title">Mysql 安全</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-guan-li-yu-ju.html"><span class="pl__circle"></span><span class="pl__title">Mysql 管理语句</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-zhuang-tai-jian-cha.html"><span class="pl__circle"></span><span class="pl__title">Mysql 状态检查</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-zhu-cong-she-zhi.html"><span class="pl__circle"></span><span class="pl__title">Mysql 主从设置</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-you-hua-pei-zhi.html"><span class="pl__circle"></span><span class="pl__title">Mysql 优化配置</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2013/02/27/mysql-ri-zhi-fen-lei.html"><span class="pl__circle"></span><span class="pl__title">Mysql 日志分类</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/02/26/ubuntu-wang-luo-she-zhi.html"><span class="pl__circle"></span><span class="pl__title">ubuntu 网络设置</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/02/26/fu-wu-qi-ji-chu-pei-zhi.html"><span class="pl__circle"></span><span class="pl__title">ubuntu 服务器基础配置</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/02/01/flask-nginx-uwsgibu-shu.html"><span class="pl__circle"></span><span class="pl__title">flask nginx uwsgi 部署</span><span class="pl__date">Feb 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/01/18/you-lan-qi-huan-cun-jie-xi.html"><span class="pl__circle"></span><span class="pl__title">游览器缓存解析</span><span class="pl__date">Jan 2013</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2013/01/10/rtxldapjiao-cheng.html"><span class="pl__circle"></span><span class="pl__title">RTXLDAP教程</span><span class="pl__date">Jan 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2013/01/06/datehan-shu-de-wu-yong.html"><span class="pl__circle"></span><span class="pl__title">date函数的误用</span><span class="pl__date">Jan 2013</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2013/01/04/jqueryzai-firefoxxia-wu-fa-autocomplete.html"><span class="pl__circle"></span><span class="pl__title">jquery在firefox下无法autocomplete</span><span class="pl__date">Jan 2013</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/12/17/system-dot-out-dot-printlnluan-ma.html"><span class="pl__circle"></span><span class="pl__title">System.out.println 乱码</span><span class="pl__date">Dec 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/25/mogilefsshe-bei-sun-pi-chu-li-liu-cheng.html"><span class="pl__circle"></span><span class="pl__title">mogilefs设备损坏处理流程</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/25/inotify.html"><span class="pl__circle"></span><span class="pl__title">inotify,rsync统一化配置</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/22/mogilefsan-zhuang-pei-zhi.html"><span class="pl__circle"></span><span class="pl__title">MogileFS安装配置</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/22/time-hiresjie-shao.html"><span class="pl__circle"></span><span class="pl__title">Time::HiRes介绍</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="数据存储 pl__all" href="/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8/2012/11/22/redisshi-zhan.html"><span class="pl__circle"></span><span class="pl__title">redis实战</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/22/xiu-fu-mogilefsmu-lu-owner.html"><span class="pl__circle"></span><span class="pl__title">修复mogilefs目录owner</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/10/an-zhuang-pei-zhi-hive.html"><span class="pl__circle"></span><span class="pl__title">安装配置hive</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/08/perlfu-jin-cheng-jian-ting-zi-jin-cheng-gong-zuo-shi-li.html"><span class="pl__circle"></span><span class="pl__title">perl父进程监听，子进程工作实例</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/11/07/nginxfan-xiang-dai-li-zi-dong-urldecodewen-ti.html"><span class="pl__circle"></span><span class="pl__title">nginx反向代理自动urldecode问题</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/06/mogilefsshan-chu-dui-lie.html"><span class="pl__circle"></span><span class="pl__title">mogilefs删除队列</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/04/bian-xie-hadoopde-map-reduce.html"><span class="pl__circle"></span><span class="pl__title">编写hadoop的Map-Reduce</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/03/eclipsepei-zhi-hadoopde-map-reducekai-fa-huan-jing.html"><span class="pl__circle"></span><span class="pl__title">eclipse配置hadoop的map-reduce开发环境</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/11/02/an-zhuang-pei-zhi-hadoop.html"><span class="pl__circle"></span><span class="pl__title">安装配置hadoop</span><span class="pl__date">Nov 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/10/23/mogilefsxiang-jie.html"><span class="pl__circle"></span><span class="pl__title">MogileFS详解</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/10/16/mogilefsde-replicatefen-xi.html"><span class="pl__circle"></span><span class="pl__title">MogileFS的replicate进程分析</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/10/14/ying-pan-an-zhuang-centos.html"><span class="pl__circle"></span><span class="pl__title">硬盘安装CentOS</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/10/13/irc-irssishi-yong-jiao-cheng.html"><span class="pl__circle"></span><span class="pl__title">IRC:irssi使用教程</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/10/13/mogstoredshi-yong-nginx.html"><span class="pl__circle"></span><span class="pl__title">mogstored使用nginx</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/10/11/mogilefswen-jian-lu-jing-gui-ze.html"><span class="pl__circle"></span><span class="pl__title">mogilefs文件路径规则</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/10/09/mogilefsshe-bei-quan-zhong-suan-fa.html"><span class="pl__circle"></span><span class="pl__title">mogilefs设备权重算法</span><span class="pl__date">Oct 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/29/mogilefsde-fscktan-jiu.html"><span class="pl__circle"></span><span class="pl__title">mogilefs fsck探究</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/27/aho-corasicksuan-fa.html"><span class="pl__circle"></span><span class="pl__title">Aho-Corasick算法</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/27/solrsheng-lue-ri-zhi.html"><span class="pl__circle"></span><span class="pl__title">显示solr省略的日志</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/21/solrde-shu-zhi-cun-chu-he-fan-wei-cha-xun.html"><span class="pl__circle"></span><span class="pl__title">solr的数值存储和范围查询</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/20/shi-yong-jmxfen-xi-solrzhuang-tai.html"><span class="pl__circle"></span><span class="pl__title">使用JMX分析solr状态</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/18/xiang-liang-kong-jian-mo-xing.html"><span class="pl__circle"></span><span class="pl__title">向量空间模型</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/14/solrman-cha-xun-fen-xi.html"><span class="pl__circle"></span><span class="pl__title">solr慢查询分析</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/09/07/lucene-ru-men.html"><span class="pl__circle"></span><span class="pl__title">lucene 入门</span><span class="pl__date">Sep 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/08/30/chang-yong-ming-ling.html"><span class="pl__circle"></span><span class="pl__title">常用命令</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/08/29/solrcha-xun-guo-cheng.html"><span class="pl__circle"></span><span class="pl__title">solr查询过程</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/08/28/solrqi-dong-fen-xi.html"><span class="pl__circle"></span><span class="pl__title">solr启动分析</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="前端 pl__all" href="/%E5%89%8D%E7%AB%AF/2012/08/24/jsmian-xiang-dui-xiang-shi-li.html"><span class="pl__circle"></span><span class="pl__title">js面向对象实例</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/08/16/xian-cheng-chi.html"><span class="pl__circle"></span><span class="pl__title">线程池</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/08/08/vimsu-ji-biao.html"><span class="pl__circle"></span><span class="pl__title">vim速记表</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/08/01/weakhashmapzuo-yong-he-shi-li.html"><span class="pl__circle"></span><span class="pl__title">WeakHashMap作用和实例</span><span class="pl__date">Aug 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/07/27/java-volatileli-jie.html"><span class="pl__circle"></span><span class="pl__title">java volatile理解</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/07/26/xdebug-500cuo-wu-xian-shi-200cheng-gong-de-bug.html"><span class="pl__circle"></span><span class="pl__title">xdebug:500错误显示200成功的bug</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/07/22/python-zhou-ti-yan-ji.html"><span class="pl__circle"></span><span class="pl__title">python 一周体验记</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/07/13/oauth-jie-shao.html"><span class="pl__circle"></span><span class="pl__title">OAuth 介绍</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="系统 pl__all" href="/%E7%B3%BB%E7%BB%9F/2012/07/07/octopress-introduce.html"><span class="pl__circle"></span><span class="pl__title">octopress 介绍</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2012/07/06/perl-ipc.html"><span class="pl__circle"></span><span class="pl__title">进程间通信【IPC】</span><span class="pl__date">Jul 2012</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2011/07/03/perl-epoll.html"><span class="pl__circle"></span><span class="pl__title">Perl使用Epoll优化</span><span class="pl__date">Jul 2011</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2011/07/03/Mogilefs-ReadFile.html"><span class="pl__circle"></span><span class="pl__title">MogileFS读取文件的过程</span><span class="pl__date">Jul 2011</span></a>
+        
+          <a class="后端 pl__all" href="/%E5%90%8E%E7%AB%AF/2011/07/03/Mogilefs-Init.html"><span class="pl__circle"></span><span class="pl__title">MogileFS启动流程</span><span class="pl__date">Jul 2011</span></a>
+        
+        </nav>
+      </div> <!-- end #posts-list -->
+    </aside> <!-- end #sidebar -->
+
+    <div id="post">
+      <div id="pjax">
+        <article id="post__content">
+  <h1 id="post__title" data-identifier="20120824">js面向对象实例</h1>
+  <p>直接上代码了</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">){</span>
+
+<span class="kd">var</span> <span class="nx">staff</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="nx">phone</span><span class="p">){</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">staff</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="nx">phone</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="nx">staff</span><span class="p">.</span><span class="nx">fn</span> <span class="o">=</span> <span class="nx">staff</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1">//静态变量</span>
+    <span class="nx">company</span><span class="o">:</span> <span class="s1">&#39;安居客&#39;</span><span class="p">,</span>
+    <span class="c1">//构造函数</span>
+    <span class="nx">init</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="nx">phone</span><span class="p">){</span>
+        <span class="c1">//私有变量</span>
+        <span class="kd">var</span> <span class="nx">cellphone</span> <span class="o">=</span> <span class="nx">phone</span><span class="p">;</span>
+        <span class="c1">//公共变量</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+        <span class="c1">//公共方法</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">getPhone</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> 
+            <span class="k">return</span> <span class="nx">cellphone</span><span class="p">;</span> 
+        <span class="p">}</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">setPhone</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">phone</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">cellphone</span> <span class="o">=</span> <span class="nx">phone</span><span class="p">;</span>
+            <span class="nx">_test_private_function</span><span class="p">();</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">//私有方法</span>
+        <span class="kd">var</span> <span class="nx">_test_private_function</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;private function:&#39;</span> <span class="o">+</span> <span class="nx">cellphone</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="c1">//公共方法</span>
+    <span class="nx">setName</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="nx">setCompany</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">c_name</span><span class="p">){</span>
+        <span class="nx">staff</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">company</span> <span class="o">=</span> <span class="nx">c_name</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">staff</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">init</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">staff</span><span class="p">.</span><span class="nx">fn</span><span class="p">;</span>
+<span class="c1">//公共方法</span>
+<span class="nx">staff</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">getName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">username</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">staff</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">getCompany</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">staff</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">company</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">s</span> <span class="o">=</span> <span class="nx">staff</span><span class="p">;</span>
+<span class="p">})(</span><span class="nb">window</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">staff1</span> <span class="o">=</span> <span class="nx">s</span><span class="p">(</span><span class="s1">&#39;王惠达1&#39;</span><span class="p">,</span><span class="s1">&#39;11111111&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">staff2</span> <span class="o">=</span> <span class="nx">s</span><span class="p">(</span><span class="s1">&#39;王惠达2&#39;</span><span class="p">,</span><span class="s1">&#39;22222222&#39;</span><span class="p">);</span>
+<span class="c1">//test static argument</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;s1:&#39;</span> <span class="o">+</span> <span class="nx">staff1</span><span class="p">.</span><span class="nx">setCompany</span><span class="p">(</span><span class="s1">&#39;瑞庭&#39;</span><span class="p">).</span><span class="nx">getCompany</span><span class="p">());</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;s2:&#39;</span> <span class="o">+</span> <span class="nx">staff2</span><span class="p">.</span><span class="nx">getCompany</span><span class="p">());</span>
+<span class="c1">//test public argument</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;s1:&#39;</span> <span class="o">+</span> <span class="nx">staff1</span><span class="p">.</span><span class="nx">setName</span><span class="p">(</span><span class="s1">&#39;王惠达&#39;</span><span class="p">).</span><span class="nx">getName</span><span class="p">());</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;s2:&#39;</span> <span class="o">+</span> <span class="nx">staff2</span><span class="p">.</span><span class="nx">getName</span><span class="p">());</span>
+<span class="c1">//test private argument</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;s1:&#39;</span> <span class="o">+</span> <span class="nx">staff1</span><span class="p">.</span><span class="nx">setPhone</span><span class="p">(</span><span class="s1">&#39;13712345678&#39;</span><span class="p">).</span><span class="nx">getPhone</span><span class="p">());</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;s2:&#39;</span> <span class="o">+</span> <span class="nx">staff2</span><span class="p">.</span><span class="nx">getPhone</span><span class="p">());</span>
+<span class="c1">//报错：console.log(&#39;s2:&#39; + staff2.cellphone);</span></code></pre></div>
+
+
+</article> <!-- end #post__content -->
+
+<div id="post__share">
+  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=http://wanghd.com/%E5%89%8D%E7%AB%AF/2012/08/24/jsmian-xiang-dui-xiang-shi-li.html&text=js面向对象实例" target="_blank"></a>
+  <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
+  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=http://wanghd.com/%E5%89%8D%E7%AB%AF/2012/08/24/jsmian-xiang-dui-xiang-shi-li.html&title=js面向对象实例" target="_blank"></a>
+</div> <!-- end #post__share -->
+
+<div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'wanghdcom'; // required: replace example with your forum shortname
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+</div> <!-- end #disqus_thread -->
+
+<p id="copyright">Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a>&nbsp;&nbsp;|&nbsp;&nbsp;Theme <a href="https://github.com/P233/3-Jekyll" target="_blank">3-Jekyll</a></p>
+
+      </div> <!-- end #pjax -->
+
+      <div id="post__toc-trigger">
+        <div id="post__toc">
+          <span id="post__toc-title">Table of Contents</span>
+          <ul id="post__toc-ul"></ul>
+        </div>
+      </div>
+    </div> <!-- end #post -->
+
+    <button id="js-fullscreen"><span id="icon-arrow" class="fontello"></span></button>
+
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/jquery.pjax.js"></script>
+    <script src="/assets/js/nprogress.js"></script>
+    <script src="/assets/js/script.js"></script>
+  </body>
+</html>
