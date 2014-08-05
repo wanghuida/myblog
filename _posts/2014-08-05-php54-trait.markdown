@@ -1,0 +1,158 @@
+---
+layout: post
+title: "php5.4 新特性"
+date: 2014-08-05 22:28
+comments: true
+sharing: true
+footer: true
+categories: [后端]
+---
+
+trait 是php新的一种特质，可以解决多重继承
+
+{% highlight php %}
+<?php
+trait C {
+    public function say() {
+        parent::say();
+        echo " {$this->_id}\n";
+    }
+}
+trait D {
+    public function say2() {
+        parent::say();
+        echo " 2\n";
+    }
+}
+
+class A {
+    public function say() {
+        echo "Hello";
+    }
+}
+class B extends A {
+
+    private $_id;
+
+    public function __construct() {
+        $this->_id = '1';
+    }
+
+    use C,D;
+}
+(new B)->say();
+(new B)->say2();
+
+
+{% endhighlight %}
+
+
+
+数组的短语法
+
+{% highlight php %}
+<?php
+$test = [
+    'a' => 'A',
+    'b' => 'B',
+];
+var_dump($test);
+foreach([1,2,3,4] as $val) {
+    var_dump($val);
+}
+
+{% endhighlight %}
+
+变量的二进制表达
+
+{% highlight php %}
+
+<?php
+
+$x = 0b0001;
+$y = 0b0010;
+var_dump($x | $y);
+var_dump($x & $y);
+var_dump($x ^ $y);
+
+{% endhighlight %}
+
+
+支持Class::{expr}()语法
+
+{% highlight php %}
+<?php
+
+class A {
+    public function say() {
+        echo "hello world!\n";
+    }
+}
+
+(new A)->{'say'}();
+
+{% endhighlight %}
+
+
+闭包支持$this
+{% highlight php %}
+<?php
+
+class A {
+    private $_id;
+
+    public function __construct() {
+        $this->_id = 15;
+    }
+
+    public function say($x) {
+        $func = function($y) use ($x) {
+            echo $this->_id * $y * $x;
+        };
+        echo "hello";
+        echo $func(2);
+        echo "\n";
+    }
+}
+
+(new A)->{'say'}(2);
+
+{% endhighlight %}
+
+
+数组的非关联化
+
+{% highlight php %}
+<?php
+
+function a() {
+    return [1,2,3,4,5];
+}
+
+echo a()[4];
+
+{% endhighlight %}
+
+
+Callable typehint
+
+{% highlight php %}
+<?php
+class Human {
+
+    private $_name;
+    public function __construct($name) {
+        $this->_name = $name;
+    }
+
+    public function hello() {
+        echo "{$this->_name} hello\n";
+    }
+}
+
+function hi(callable $f) {
+    $f();
+}
+
+hi([new Human("Gonzalo"), 'hello']);
+{% endhighlight %}

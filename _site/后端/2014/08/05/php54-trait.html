@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
 
-    <title>Aho-Corasick算法</title>
+    <title>php5.4 新特性</title>
     <meta name="description" content="">
 
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
@@ -248,179 +248,136 @@
     <div id="post">
       <div id="pjax">
         <article id="post__content">
-  <h1 id="post__title" data-identifier="20120927">Aho-Corasick算法</h1>
-  <h3 id="aho-corasick">aho-corasick算法优势</h3>
-<ul>
-  <li>查找时无需回溯，性能相当好</li>
-  <li>当需要查找或替换的词非常多时，生成的trie树可以方便缓存</li>
-</ul>
+  <h1 id="post__title" data-identifier="20140805">php5.4 新特性</h1>
+  <p>trait 是php新的一种特质，可以解决多重继承</p>
 
-<h3 id="section">学习方法</h3>
-<ul>
-  <li>了解ac算法的基本思想</li>
-  <li>阅读源码（看过php, java, perl的版本，还最推荐perl, 因为perl语法精炼,易于阅读）</li>
-  <li>ac模拟器（见下面的flash，可以尝试操作一下）</li>
-</ul>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">trait</span> <span class="nx">C</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">say</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">say</span><span class="p">();</span>
+        <span class="k">echo</span> <span class="s2">&quot; </span><span class="si">{</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_id</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">trait</span> <span class="nx">D</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">say2</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">say</span><span class="p">();</span>
+        <span class="k">echo</span> <span class="s2">&quot; 2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-<!-- more -->
+<span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">say</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">&quot;Hello&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">class</span> <span class="nc">B</span> <span class="k">extends</span> <span class="nx">A</span> <span class="p">{</span>
 
-<object width="650" height="500" type="application/x-shockwave-flash" data="http://www.ivank.net/blogspot/en/AHODrawing.swf">
-<param value="http://www.ivank.net/blogspot/en/AHODrawing.swf" name="movie" />
-<!-- http://blog.ivank.net/aho-corasick-algorithm-in-as3.html -->
-</object>
+    <span class="k">private</span> <span class="nv">$_id</span><span class="p">;</span>
 
-<h3 id="perlaho-corasick">测试Perl的aho-corasick搜索</h3>
-
-<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">use</span> <span class="nn">Algorithm::AhoCorasick::</span><span class="n">SearchMachine</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-<span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
-<span class="k">use</span> <span class="n">utf8</span><span class="p">;</span>
-
-<span class="k">my</span> <span class="nv">$text</span> <span class="o">=</span> <span class="s">&quot;王惠达啊&quot;</span><span class="p">;</span> <span class="c1">#被搜索的内容</span>
-<span class="k">my</span> <span class="nv">@keywords</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;王惠达&quot;</span><span class="p">,</span><span class="s">&quot;惠达啊&quot;</span><span class="p">);</span> <span class="c1">#需要查找的关键字,这两个关键字是设计过的</span>
-<span class="k">my</span> <span class="nv">$machine</span> <span class="o">=</span> <span class="nn">Algorithm::AhoCorasick::</span><span class="n">SearchMachine</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="nv">@keywords</span><span class="p">);</span> <span class="c1">#实例化</span>
-
-<span class="k">my</span> <span class="nv">%total</span><span class="p">;</span>
-<span class="k">my</span> <span class="nv">$handle_all</span> <span class="o">=</span> <span class="k">sub </span><span class="p">{</span> <span class="c1">#回调函数，把位置和关键字收集起来</span>
-    <span class="k">my</span> <span class="p">(</span><span class="nv">$pos</span><span class="p">,</span> <span class="nv">$keyword</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span> 
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">exists</span><span class="p">(</span><span class="nv">$total</span><span class="p">{</span><span class="nv">$pos</span><span class="p">}))</span> <span class="p">{</span>
-        <span class="nv">$total</span><span class="p">{</span><span class="nv">$pos</span><span class="p">}</span> <span class="o">=</span> <span class="p">[</span> <span class="p">];</span>
-    <span class="p">}</span>   
-    <span class="nb">push</span> <span class="nv">@</span><span class="p">{</span><span class="nv">$total</span><span class="p">{</span><span class="nv">$pos</span><span class="p">}},</span> <span class="nv">$keyword</span><span class="p">;</span>
-    <span class="nb">undef</span><span class="p">;</span>
-<span class="p">};</span>
-
-<span class="nv">$machine</span><span class="o">-&gt;</span><span class="n">feed</span><span class="p">(</span><span class="nv">$text</span><span class="p">,</span> <span class="nv">$handle_all</span><span class="p">);</span> <span class="c1">#查找</span>
-
-<span class="k">print</span> <span class="n">Dumper</span><span class="p">(</span><span class="o">\</span><span class="nv">%total</span><span class="p">);</span> <span class="c1">#打印结果</span></code></pre></div>
-
-<h3 id="aho-corasick-1">aho-corasick建立树过程</h3>
-<ul>
-  <li>将关键字建立起一颗Tire树</li>
-  <li>设置第一层的不匹配的转移节点</li>
-  <li>设置其余的不匹配转移节点</li>
-  <li>初始化状态到根节点</li>
-</ul>
-
-<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">sub </span><span class="nf">_build_tree</span> <span class="p">{</span>
-    <span class="k">my</span> <span class="nv">$self</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
-
-    <span class="c1">#建立根节点，Node对象包含属性parent,char,results,transitions,failure</span>
-    <span class="c1">#parent属性放置的也是Node对象</span>
-    <span class="c1">#char属性是一个字符</span>
-    <span class="c1">#results属性代表匹配的串,当达到这个状态时可以直接返回</span>
-    <span class="c1">#transitions属性用来描述树型结构的hash,以char为key,Node对象为value</span>
-    <span class="c1">#failure属性放置的也是Node对象，当匹配失败时，转移到哪个状态</span>
-    <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">root</span><span class="p">}</span> <span class="o">=</span> <span class="nn">Algorithm::AhoCorasick::</span><span class="n">Node</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">();</span>
-
-    <span class="c1">#将关键字建立起一颗树</span>
-    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$p</span> <span class="p">(</span><span class="nv">@</span><span class="p">{</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">keywords</span><span class="p">}})</span> <span class="p">{</span> <span class="c1">#循环传进来的keywords数组</span>
-        <span class="k">my</span> <span class="nv">$nd</span> <span class="o">=</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">root</span><span class="p">};</span> <span class="c1">#每次都是从根节点开始的</span>
-        <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$c</span> <span class="p">(</span><span class="nb">split</span> <span class="sr">//</span><span class="p">,</span> <span class="nv">$p</span><span class="p">)</span> <span class="p">{</span> <span class="c1">#切割成字符</span>
-            <span class="k">my</span> <span class="nv">$ndNew</span> <span class="o">=</span> <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">get_transition</span><span class="p">(</span><span class="nv">$c</span><span class="p">);</span> <span class="c1">#如果父节点已经包含该字符,直接取得该节点</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$ndNew</span><span class="p">)</span> <span class="p">{</span>
-                <span class="c1">#如果父节点不包含该字符，就新建一个Node,并增加到父节点</span>
-                <span class="nv">$ndNew</span> <span class="o">=</span> <span class="nn">Algorithm::AhoCorasick::</span><span class="n">Node</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="n">parent</span> <span class="o">=&gt;</span> <span class="nv">$nd</span><span class="p">,</span> <span class="n">char</span> <span class="o">=&gt;</span> <span class="nv">$c</span><span class="p">);</span>
-                <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">add_transition</span><span class="p">(</span><span class="nv">$ndNew</span><span class="p">);</span>
-            <span class="p">}</span>   
-            <span class="c1">#修改父节点</span>
-            <span class="nv">$nd</span> <span class="o">=</span> <span class="nv">$ndNew</span><span class="p">;</span>
-        <span class="p">}</span>   
-        <span class="c1">#在最后一个节点,增加一个result，为了搜索时可以直接匹配的字符串 </span>
-        <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">add_result</span><span class="p">(</span><span class="nv">$p</span><span class="p">);</span>
-    <span class="p">}</span>   
-
-    <span class="c1">#设置第一层的不匹配的转移节点</span>
-    <span class="k">my</span> <span class="nv">@nodes</span><span class="p">;</span>
-    <span class="c1">#循环根节点下的所有节点</span>
-    <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$nd</span> <span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">root</span><span class="p">}</span><span class="o">-&gt;</span><span class="n">transitions</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">#第一层的不匹配肯定是根节点</span>
-        <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">failure</span><span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">root</span><span class="p">});</span>
-        <span class="c1">#增加该节点的子节点到数组，为了遍历设置其余节点的不匹配转移节点</span>
-        <span class="nb">push</span> <span class="nv">@nodes</span><span class="p">,</span> <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">transitions</span><span class="p">;</span>
-    <span class="p">}</span>   
-        
-    <span class="c1">#循环设置其余的不匹配转移节点</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nv">@nodes</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">my</span> <span class="nv">@newNodes</span><span class="p">;</span>
-        <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$nd</span> <span class="p">(</span><span class="nv">@nodes</span><span class="p">)</span> <span class="p">{</span> <span class="c1">#循环着一层的节点</span>
-            <span class="k">my</span> <span class="nv">$r</span> <span class="o">=</span> <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">parent</span><span class="o">-&gt;</span><span class="n">failure</span><span class="p">;</span> <span class="c1">#父节点的不匹配跳转节点</span>
-            <span class="k">my</span> <span class="nv">$c</span> <span class="o">=</span> <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">char</span><span class="p">;</span> <span class="c1">#该节点的字符</span>
-
-            <span class="c1">#如果父节点的失败节点的子节点中包含该字符，跳出while，此时$r是不空的</span>
-            <span class="c1">#如果不满足上面的情况,就用父节点的失败节点的失败节点，其实根节点的failure是undef的呀</span>
-            <span class="k">while</span> <span class="p">(</span><span class="nv">$r</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">(</span><span class="nv">$r</span><span class="o">-&gt;</span><span class="n">get_transition</span><span class="p">(</span><span class="nv">$c</span><span class="p">)))</span> <span class="p">{</span>
-                <span class="nv">$r</span> <span class="o">=</span> <span class="nv">$r</span><span class="o">-&gt;</span><span class="n">failure</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$r</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">failure</span><span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">root</span><span class="p">});</span> <span class="c1">#$r=undef，就代表要用根节点</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="c1">#寻找父节点的失败节点的包含该字符的子节点</span>
-                <span class="k">my</span> <span class="nv">$tc</span> <span class="o">=</span> <span class="nv">$r</span><span class="o">-&gt;</span><span class="n">get_transition</span><span class="p">(</span><span class="nv">$c</span><span class="p">);</span>
-                <span class="c1">#为该节点设置失败节点</span>
-                <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">failure</span><span class="p">(</span><span class="nv">$tc</span><span class="p">);</span>
-
-                <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$result</span> <span class="p">(</span><span class="nv">$tc</span><span class="o">-&gt;</span><span class="n">results</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">add_result</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="c1">#继续下面一层</span>
-            <span class="nb">push</span> <span class="nv">@newNodes</span><span class="p">,</span> <span class="nv">$nd</span><span class="o">-&gt;</span><span class="n">transitions</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="nv">@nodes</span> <span class="o">=</span> <span class="nv">@newNodes</span><span class="p">;</span> <span class="c1">#再来一遍</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_id</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="c1">#上面根节点的failure是undef，现在设置一下，为查找时可以统一处理</span>
-    <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">root</span><span class="p">}</span><span class="o">-&gt;</span><span class="n">failure</span><span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">root</span><span class="p">});</span>
-    <span class="c1">#初始化状态到根节点</span>
-    <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">state</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">root</span><span class="p">};</span>
+    <span class="k">use</span> <span class="nx">C</span><span class="p">,</span><span class="nx">D</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">B</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">say</span><span class="p">();</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">B</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">say2</span><span class="p">();</span></code></pre></div>
+
+<p>数组的短语法</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$test</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;a&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;b&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$test</span><span class="p">);</span>
+<span class="k">foreach</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$val</span><span class="p">);</span>
 <span class="p">}</span></code></pre></div>
 
-<h3 id="section-1">查找过程</h3>
+<p>变量的二进制表达</p>
 
-<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="k">sub </span><span class="nf">feed</span> <span class="p">{</span>
-    <span class="k">my</span> <span class="p">(</span><span class="nv">$self</span><span class="p">,</span> <span class="nv">$text</span><span class="p">,</span> <span class="nv">$callback</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
-    <span class="k">my</span> <span class="nv">$index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">my</span> <span class="nv">$l</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="nv">$text</span><span class="p">);</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nv">$index</span> <span class="o">&lt;</span> <span class="nv">$l</span><span class="p">)</span> <span class="p">{</span> <span class="c1">#一个一个字符的遍历起来</span>
-        <span class="k">my</span> <span class="nv">$trans</span> <span class="o">=</span> <span class="nb">undef</span><span class="p">;</span>
-        <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">#从当前状态获取子节点中匹配该字符的节点</span>
-            <span class="nv">$trans</span> <span class="o">=</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">state</span><span class="p">}</span><span class="o">-&gt;</span><span class="n">get_transition</span><span class="p">(</span><span class="nb">substr</span><span class="p">(</span><span class="nv">$text</span><span class="p">,</span> <span class="nv">$index</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
-            <span class="c1">#如果状态是根节点或者匹配到了就跳出while</span>
-            <span class="k">last</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">state</span><span class="p">}</span> <span class="o">==</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">root</span><span class="p">})</span> <span class="o">||</span> <span class="nv">$trans</span><span class="p">;</span>
-            <span class="c1">#不是根节点，也没匹配到，转到失败节点</span>
-            <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">state</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">state</span><span class="p">}</span><span class="o">-&gt;</span><span class="n">failure</span><span class="p">;</span>
-        <span class="p">}</span>
+<span class="nv">$x</span> <span class="o">=</span> <span class="mi">0</span><span class="nx">b0001</span><span class="p">;</span>
+<span class="nv">$y</span> <span class="o">=</span> <span class="mi">0</span><span class="nx">b0010</span><span class="p">;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$x</span> <span class="o">|</span> <span class="nv">$y</span><span class="p">);</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$x</span> <span class="o">&amp;</span> <span class="nv">$y</span><span class="p">);</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$x</span> <span class="o">^</span> <span class="nv">$y</span><span class="p">);</span></code></pre></div>
 
-        <span class="c1">#如果匹配到就把状态转到匹配的这个节点</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$trans</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">state</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$trans</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="c1">#如果匹配到的状态有返回值，那就调用回调函数</span>
-        <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$found</span> <span class="p">(</span><span class="nv">$self</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">state</span><span class="p">}</span><span class="o">-&gt;</span><span class="n">results</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">my</span> <span class="nv">$rv</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$callback</span><span class="p">(</span><span class="nv">$index</span> <span class="o">-</span> <span class="nb">length</span><span class="p">(</span><span class="nv">$found</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">$found</span><span class="p">);</span>
-            <span class="c1">#回调函数不好有返回值的呀，有的话一半就停掉了呀</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nv">$rv</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nv">$rv</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="c1">#继续继续</span>
-        <span class="o">++</span><span class="nv">$index</span><span class="p">;</span>
+<p>支持Class::{expr}()语法</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+
+<span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">say</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">&quot;hello world!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">(</span><span class="k">new</span> <span class="nx">A</span><span class="p">)</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">&#39;say&#39;</span><span class="p">}();</span></code></pre></div>
+
+<p>闭包支持$this</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+
+<span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$_id</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_id</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="k">return</span> <span class="nb">undef</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">say</span><span class="p">(</span><span class="nv">$x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$func</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="nv">$y</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$x</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_id</span> <span class="o">*</span> <span class="nv">$y</span> <span class="o">*</span> <span class="nv">$x</span><span class="p">;</span>
+        <span class="p">};</span>
+        <span class="k">echo</span> <span class="s2">&quot;hello&quot;</span><span class="p">;</span>
+        <span class="k">echo</span> <span class="nv">$func</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+        <span class="k">echo</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">(</span><span class="k">new</span> <span class="nx">A</span><span class="p">)</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">&#39;say&#39;</span><span class="p">}(</span><span class="mi">2</span><span class="p">);</span></code></pre></div>
+
+<p>数组的非关联化</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+
+<span class="k">function</span> <span class="nf">a</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">echo</span> <span class="nx">a</span><span class="p">()[</span><span class="mi">4</span><span class="p">];</span></code></pre></div>
+
+<p>Callable typehint</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">class</span> <span class="nc">Human</span> <span class="p">{</span>
+
+    <span class="k">private</span> <span class="nv">$_name</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_name</span> <span class="o">=</span> <span class="nv">$name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">&quot;</span><span class="si">{</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_name</span><span class="si">}</span><span class="s2"> hello</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">function</span> <span class="nf">hi</span><span class="p">(</span><span class="nx">callable</span> <span class="nv">$f</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$f</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">hi</span><span class="p">([</span><span class="k">new</span> <span class="nx">Human</span><span class="p">(</span><span class="s2">&quot;Gonzalo&quot;</span><span class="p">),</span> <span class="s1">&#39;hello&#39;</span><span class="p">]);</span></code></pre></div>
 
 
 </article> <!-- end #post__content -->
 
 <div id="post__share">
-  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=http://wanghd.com/%E5%90%8E%E7%AB%AF/2012/09/27/aho-corasicksuan-fa.html&text=Aho-Corasick算法" target="_blank"></a>
+  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=http://wanghd.com/%E5%90%8E%E7%AB%AF/2014/08/05/php54-trait.html&text=php5.4 新特性" target="_blank"></a>
   <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
-  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=http://wanghd.com/%E5%90%8E%E7%AB%AF/2012/09/27/aho-corasicksuan-fa.html&title=Aho-Corasick算法" target="_blank"></a>
+  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=http://wanghd.com/%E5%90%8E%E7%AB%AF/2014/08/05/php54-trait.html&title=php5.4 新特性" target="_blank"></a>
 </div> <!-- end #post__share -->
 
 <div id="disqus_thread">
