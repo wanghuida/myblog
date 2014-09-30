@@ -5,9 +5,102 @@
     <description></description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 30 Sep 2014 22:22:18 +0800</pubDate>
-    <lastBuildDate>Tue, 30 Sep 2014 22:22:18 +0800</lastBuildDate>
+    <pubDate>Tue, 30 Sep 2014 22:59:25 +0800</pubDate>
+    <lastBuildDate>Tue, 30 Sep 2014 22:59:25 +0800</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
+    
+      <item>
+        <title>web 取得ios设备的DeviceId</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;用普通的方法想要在safari中获取DeviceId基本是不可能的，下面介绍一种特殊的方法&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;创建一个获取结果的php文件，result.php&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// result.php&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;file_get_contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;php://input&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;file_put_contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/tmp/result.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;创建一个html文件 index.html 读取m.mobileconfig文件&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- index.html --&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/m.mobileconfig&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;安装证书&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;创建m.mobileconfig，记得更改成自己URL&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE plist PUBLIC &amp;quot;-//Apple Computer//DTD PLIST 1.0//EN&amp;quot; &amp;quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;plist&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadContent&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;DeviceAttributes&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;array&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;UDID&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;IMEI&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;MEID&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;ICCID&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;VERSION&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;PRODUCT&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;MAC_ADDRESS_EN0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;DEVICE_NAME&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;DeviceName&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;SERIAL&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;IMSI&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;Model&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;ModelName&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;OSVersion&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+                &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;WiFiMAC&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/array&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;URL&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;http://localhost/result.php&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadDescription&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;Just collect something sensitive.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadDisplayName&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;Device Attribute Collection&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadIdentifier&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;com.sskaje.profile-service&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadOrganization&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;sskaje.me&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadType&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;Profile Service&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadUUID&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;3C9C7688-1655-4603-8761-960409082944&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PayloadVersion&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;integer&amp;gt;&lt;/span&gt;1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/integer&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;赶紧打开html文件点击链接试试吧，/tmp/result.txt的结果应该如下&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;plist&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;IMEI&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;01 200321 834020 4&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;PRODUCT&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;iPhone4,1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;SERIAL&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;C39GD4MGWTDD&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;UDID&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;512aabdcsd92624fa8317e650da7bb3b44cadebf&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;key&amp;gt;&lt;/span&gt;VERSION&lt;span class=&quot;nt&quot;&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;12A365&lt;span class=&quot;nt&quot;&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Tue, 30 Sep 2014 22:28:00 +0800</pubDate>
+        <link>/%E7%A7%BB%E5%8A%A8/2014/09/30/web-get-ios-device-id.html</link>
+        <guid isPermaLink="true">/%E7%A7%BB%E5%8A%A8/2014/09/30/web-get-ios-device-id.html</guid>
+        
+        
+        <category>移动</category>
+        
+      </item>
     
       <item>
         <title>ssh_config 占位符</title>
@@ -542,60 +635,6 @@ List of devices attached
         <pubDate>Thu, 22 May 2014 17:35:00 +0800</pubDate>
         <link>/%E5%90%8E%E7%AB%AF/2014/05/22/hive-load-nginx-log.html</link>
         <guid isPermaLink="true">/%E5%90%8E%E7%AB%AF/2014/05/22/hive-load-nginx-log.html</guid>
-        
-        
-        <category>后端</category>
-        
-      </item>
-    
-      <item>
-        <title>图像的模糊处理</title>
-        <description>&lt;p&gt;一些相关理论的介绍，容易理解 &lt;a href=&quot;http://www.cnblogs.com/justany/archive/2012/11/21/2779978.html&quot;&gt;点击查看&lt;/a&gt;&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;opencv2/core/core.hpp&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;opencv2/highgui/highgui.hpp&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;opencv2/imgproc/imgproc.hpp&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;cv.h&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Usage: display_image ImageToLoadAndDisplay&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;Mat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CV_LOAD_IMAGE_COLOR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Could not open or find the image&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Mat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outimg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//blur(image, outimg, Size(10, 10));&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//GaussianBlur( image, outimg, Size(5,5), 1000, 1000 );&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//medianBlur( image, outimg, 9);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;bilateralFilter&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outimg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//cvtColor(image, outimg, CV_RGB2GRAY);&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;namedWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Display Image&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CV_WINDOW_AUTOSIZE&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;namedWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Display Out Image&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CV_WINDOW_AUTOSIZE&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Display Image&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Display Out Image&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outimg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;waitKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-</description>
-        <pubDate>Wed, 23 Apr 2014 14:44:00 +0800</pubDate>
-        <link>/%E5%90%8E%E7%AB%AF/2014/04/23/fuzzy-image.html</link>
-        <guid isPermaLink="true">/%E5%90%8E%E7%AB%AF/2014/04/23/fuzzy-image.html</guid>
         
         
         <category>后端</category>

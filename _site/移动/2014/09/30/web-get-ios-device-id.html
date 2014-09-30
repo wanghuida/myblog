@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
 
-    <title>jquery validation</title>
+    <title>web 取得ios设备的DeviceId</title>
     <meta name="description" content="">
 
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
@@ -254,71 +254,95 @@
     <div id="post">
       <div id="pjax">
         <article id="post__content">
-  <h1 id="post__title" data-identifier="20130523">jquery validation</h1>
-  <p>表单验证在网站开发中是肯定有的，还好jquery在这方面已经做的很好了</p>
-
-<ul>
-  <li>自定义一种验证类型</li>
+  <h1 id="post__title" data-identifier="20140930">web 取得ios设备的DeviceId</h1>
+  <ul>
+  <li>用普通的方法想要在safari中获取DeviceId基本是不可能的，下面介绍一种特殊的方法</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">jQuery</span><span class="p">.</span><span class="nx">validator</span><span class="p">.</span><span class="nx">addMethod</span><span class="p">(</span>
-    <span class="s2">&quot;cellphone&quot;</span><span class="p">,</span>
-    <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">optional</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="o">||</span> <span class="sr">/^1\d{10}$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;请输入有效的手机号码&quot;</span>
-<span class="p">);</span></code></pre></div>
+<p>创建一个获取结果的php文件，result.php</p>
 
-<!-- more -->
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// result.php</span>
 
-<ul>
-  <li>定义规则和错误显示</li>
-</ul>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;php://input&#39;</span><span class="p">);</span>
+<span class="nb">file_put_contents</span><span class="p">(</span><span class="s1">&#39;/tmp/result.txt&#39;</span><span class="p">,</span> <span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#form&#39;</span><span class="p">).</span><span class="nx">validate</span><span class="p">({</span>
-    <span class="nx">rules</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">nickname</span><span class="o">:</span> <span class="s2">&quot;required&quot;</span><span class="p">,</span>
-        <span class="nx">email</span><span class="o">:</span> <span class="p">{</span>
-            <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="nx">email</span><span class="o">:</span> <span class="kc">true</span>
-        <span class="p">},</span>
-        <span class="nx">password</span><span class="o">:</span> <span class="p">{</span>
-            <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="nx">minlength</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nx">messages</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">nickname</span><span class="o">:</span> <span class="s2">&quot;请输入昵称&quot;</span><span class="p">,</span>
-        <span class="nx">email</span><span class="o">:</span> <span class="p">{</span>
-            <span class="nx">required</span><span class="o">:</span> <span class="s2">&quot;请输入邮箱&quot;</span><span class="p">,</span>
-            <span class="nx">email</span><span class="o">:</span> <span class="s2">&quot;请输入有效的邮箱&quot;</span>
-        <span class="p">},</span>
-        <span class="nx">password</span><span class="o">:</span> <span class="p">{</span>
-            <span class="nx">required</span><span class="o">:</span> <span class="s2">&quot;请输入密码&quot;</span><span class="p">,</span>
-            <span class="nx">minlength</span><span class="o">:</span> <span class="s2">&quot;密码的长度不能小于6位&quot;</span>
-        <span class="p">}</span>
-    <span class="p">},</span>
-    <span class="nx">errorElement</span><span class="o">:</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span>
-    <span class="nx">wrapper</span><span class="o">:</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span>
-    <span class="nx">errorPlacement</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">element</span><span class="p">.</span><span class="nx">parent</span><span class="p">().</span><span class="nx">after</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
-    <span class="p">},</span>
-    <span class="nx">highlight</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">errorClass</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;border&#39;</span><span class="p">,</span> <span class="s1">&#39;1px solid red&#39;</span><span class="p">);</span>
-    <span class="p">},</span>
-    <span class="nx">unhighlight</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">errorClass</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;border&#39;</span><span class="p">,</span> <span class="s1">&#39;1px solid #777&#39;</span><span class="p">);</span>
-    <span class="p">},</span>
-    <span class="nx">submitHandler</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Submitted!&quot;</span><span class="p">)</span> <span class="p">}</span>
-<span class="p">});</span></code></pre></div>
+<p>创建一个html文件 index.html 读取m.mobileconfig文件</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- index.html --&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/m.mobileconfig&quot;</span><span class="nt">&gt;</span>安装证书<span class="nt">&lt;/a&gt;</span></code></pre></div>
+
+<p>创建m.mobileconfig，记得更改成自己URL</p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple Computer//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>PayloadContent<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;dict&gt;</span>
+            <span class="nt">&lt;key&gt;</span>DeviceAttributes<span class="nt">&lt;/key&gt;</span>
+            <span class="nt">&lt;array&gt;</span>
+                <span class="nt">&lt;string&gt;</span>UDID<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>IMEI<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>MEID<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>ICCID<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>VERSION<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>PRODUCT<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>MAC_ADDRESS_EN0<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>DEVICE_NAME<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>DeviceName<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>SERIAL<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>IMSI<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>Model<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>ModelName<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>OSVersion<span class="nt">&lt;/string&gt;</span>
+                <span class="nt">&lt;string&gt;</span>WiFiMAC<span class="nt">&lt;/string&gt;</span>
+            <span class="nt">&lt;/array&gt;</span>
+            <span class="nt">&lt;key&gt;</span>URL<span class="nt">&lt;/key&gt;</span>
+            <span class="nt">&lt;string&gt;</span>http://localhost/result.php<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;/dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>PayloadDescription<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>Just collect something sensitive.<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>PayloadDisplayName<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>Device Attribute Collection<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>PayloadIdentifier<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>com.sskaje.profile-service<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>PayloadOrganization<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>sskaje.me<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>PayloadType<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>Profile Service<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>PayloadUUID<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>3C9C7688-1655-4603-8761-960409082944<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>PayloadVersion<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;integer&gt;</span>1<span class="nt">&lt;/integer&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span></code></pre></div>
+
+<p>赶紧打开html文件点击链接试试吧，/tmp/result.txt的结果应该如下</p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>IMEI<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>01 200321 834020 4<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>PRODUCT<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>iPhone4,1<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>SERIAL<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>C39GD4MGWTDD<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>UDID<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>512aabdcsd92624fa8317e650da7bb3b44cadebf<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>VERSION<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>12A365<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span></code></pre></div>
 
 
 </article> <!-- end #post__content -->
 
 <div id="post__share">
-  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=http://wanghd.com/%E5%89%8D%E7%AB%AF/2013/05/23/jquery-validation.html&text=jquery validation" target="_blank"></a>
+  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=http://wanghd.com/%E7%A7%BB%E5%8A%A8/2014/09/30/web-get-ios-device-id.html&text=web 取得ios设备的DeviceId" target="_blank"></a>
   <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
-  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=http://wanghd.com/%E5%89%8D%E7%AB%AF/2013/05/23/jquery-validation.html&title=jquery validation" target="_blank"></a>
+  <a id="icon-weibo" class="fontello" href="http://v.t.sina.com.cn/share/share.php?url=http://wanghd.com/%E7%A7%BB%E5%8A%A8/2014/09/30/web-get-ios-device-id.html&title=web 取得ios设备的DeviceId" target="_blank"></a>
 </div> <!-- end #post__share -->
 
 <div id="disqus_thread">
