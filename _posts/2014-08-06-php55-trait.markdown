@@ -1,0 +1,86 @@
+---
+layout: post
+title: "php5.5 新特性"
+date: 2014-08-05 22:28
+comments: true
+sharing: true
+footer: true
+categories: [后端]
+---
+
+yield 关键字
+
+{% highlight php %}
+<?php
+function getNumberRange($start, $end, $step = 1) {
+    while ($start <= $end) {
+        yield $start;
+        $start += $step;
+    }
+}
+
+
+foreach (getNumberRange(1,100,2) as $number) {
+    echo $number.',';
+}
+echo "\n";
+
+{% endhighlight %}
+
+
+finally 关键字
+
+{% highlight php %}
+<?php
+try {
+    ...
+} catch (Exception $ex) {
+    ...
+} finally {
+    ...
+}
+{% endhighlight %}
+
+新的加密
+
+{% highlight php %}
+
+<?php
+
+$password = 123456;
+
+$hash = password_hash($password, PASSWORD_DEFAULT);
+var_dump($hash);
+
+var_dump(password_verify($password, $hash));
+
+{% endhighlight %}
+
+字符串和数组可以使用下标访问
+
+{% highlight php %}
+<?php
+
+var_dump([1,2,3,4,5][4]);
+
+var_dump('dfdfdfdfdf'[4]);
+
+{% endhighlight %}
+
+
+foreach中使用list
+
+{% highlight php %}
+<?php
+
+$array = [
+    [10, 20],
+    [30, 40],
+];
+foreach ($array as list($a, $b)) {
+    echo "First: $a; Second: $b\n";
+}
+
+{% endhighlight %}
+
+
