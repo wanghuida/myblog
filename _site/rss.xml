@@ -6,8 +6,8 @@
     <atom:link href="place_your_blog_url_here/rss.xml" rel="self" type="application/rss+xml" />
     <description>place_your_blog_description_here</description>
     <language>place_your_blog_language_here</language>
-    <pubDate>Wed, 12 Nov 2014 10:28:53 +0800</pubDate>
-    <lastBuildDate>Wed, 12 Nov 2014 10:28:53 +0800</lastBuildDate>
+    <pubDate>Wed, 12 Nov 2014 10:31:54 +0800</pubDate>
+    <lastBuildDate>Wed, 12 Nov 2014 10:31:54 +0800</lastBuildDate>
 
     
     <item>
@@ -102,10 +102,10 @@
     
     <item>
       <title>velocity 介绍</title>
-      <link>place_your_blog_url_here/%E5%89%8D%E6%AE%B5/2014/09/30/velocity-intro.html</link>
+      <link>place_your_blog_url_here/%E5%89%8D%E7%AB%AF/2014/09/30/velocity-intro.html</link>
       <pubDate>30 Sep 2014</pubDate>
       <author>place_your_name_here</author>
-      <guid>place_your_blog_url_here/%E5%89%8D%E6%AE%B5/2014/09/30/velocity-intro</guid>
+      <guid>place_your_blog_url_here/%E5%89%8D%E7%AB%AF/2014/09/30/velocity-intro</guid>
       <description>&lt;p&gt;velocity 是一个js的动画引擎，非常小巧好用&lt;/p&gt;
 
 &lt;p&gt;下面给一个例子，是我项目中用到得，他还有很多其他的效果&lt;/p&gt;

@@ -5,8 +5,8 @@
     <description></description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 12 Nov 2014 10:28:53 +0800</pubDate>
-    <lastBuildDate>Wed, 12 Nov 2014 10:28:53 +0800</lastBuildDate>
+    <pubDate>Wed, 12 Nov 2014 10:31:54 +0800</pubDate>
+    <lastBuildDate>Wed, 12 Nov 2014 10:31:54 +0800</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
     
       <item>
@@ -113,11 +113,11 @@
 &lt;iframe width=&quot;100%&quot; height=&quot;400&quot; src=&quot;http://jsfiddle.net/wanghuida/zpk7f81g/3/embedded/&quot; allowfullscreen=&quot;allowfullscreen&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
 </description>
         <pubDate>Tue, 30 Sep 2014 22:28:00 +0800</pubDate>
-        <link>/%E5%89%8D%E6%AE%B5/2014/09/30/velocity-intro.html</link>
-        <guid isPermaLink="true">/%E5%89%8D%E6%AE%B5/2014/09/30/velocity-intro.html</guid>
+        <link>/%E5%89%8D%E7%AB%AF/2014/09/30/velocity-intro.html</link>
+        <guid isPermaLink="true">/%E5%89%8D%E7%AB%AF/2014/09/30/velocity-intro.html</guid>
         
         
-        <category>前段</category>
+        <category>前端</category>
         
       </item>
     
