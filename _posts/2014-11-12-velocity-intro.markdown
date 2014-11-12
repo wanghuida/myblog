@@ -5,7 +5,7 @@ date: 2014-09-30 22:28
 comments: true
 sharing: true
 footer: true
-categories: [前段]
+categories: [前端]
 ---
 
 
