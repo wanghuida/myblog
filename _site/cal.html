@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>项目价格计算器</title>
+    <script src="angular.min.js"></script>
+    <style>
+    body {
+      padding: 30px;
+    }
+    div {
+      padding: 10px;
+    }
+    </style>
+  </head>
+
+  <body ng-controller="cal">
+    <h2>项目价格计算器</h2>
+    <div>
+      <label for="day">工作时长（天数）：</label>
+      <input ng-model="day" type="number" id="day" />
+    </div>
+    <div>
+      <label for="hard">难易度：</label>
+      <select id="hard" ng-model="hard">
+        <option value="1400">简单</option>
+        <option value="1500">较简单</option>
+        <option value="1600">中等</option>
+        <option value="1700">较困难</option>
+        <option value="1800">困难</option>
+      </select>
+    </div>
+    <div>
+      <label for="deploy">开发部署：</label>
+      <select id="deploy" ng-model="deploy">
+        <option value="0">不包含</option>
+        <option value="1000">包含</option>
+      </select>
+    </div>
+    <div>
+      <label for="tax">是否开票：</label>
+      <select id="tax" ng-model="tax">
+        <option value="1">不包含</option>
+        <option value="1.3">包含</option>
+      </select>
+    </div>
+
+    <h3>价格：<span>{{ calculate() }}</span> 元</h3>
+  </body>
+  <script>
+  var app = angular.module('app', []);
+  app.controller('cal', function ($scope) {
+    $scope.day = 0;
+    $scope.hard = 1600;
+    $scope.tax = 1;
+    $scope.deploy = 0;
+
+    $scope.calculate = function() {
+      var result =  $scope.hard * $scope.day * $scope.tax + parseInt($scope.deploy); 
+
+      // 公司运营成本
+      result += 20 * $scope.day;    // 电费 400 每月
+      result += 20 * $scope.day;    // 设备折旧费 18000 用 4 年
+      result += 140 * $scope.day;   // 办公租金 3000 每月
+      result += 45 * $scope.day;    // 员工补贴
+      result += 22 * $scope.day;    // 员工 4 金
+      result += 68 * $scope.day;    // 宽带费 1500 每月
+      result += 5 * $scope.day;     // 办公用品 费用
+
+      return result;
+    };
+  });
+  </script>
+</html>
