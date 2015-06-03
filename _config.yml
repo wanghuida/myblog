@@ -1,2 +1,4 @@
 highlighter: 'pygments'
+analytics :
+    provider : custom
 
